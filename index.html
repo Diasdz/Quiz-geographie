@@ -19,6 +19,7 @@
       font-size: 2.2em;
       color: #5d4037;
       text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+      margin-bottom: 10px;
     }
     .quiz-card {
       background: #fffaf4;
@@ -28,7 +29,7 @@
       max-width: 600px;
       width: 100%;
       opacity: 1;
-      transition: opacity 0.3s ease;
+      transition: opacity 0.5s ease;
     }
     .choices {
       display: grid;
@@ -104,10 +105,7 @@
   </style>
 </head>
 <body>
-  <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Globe_icon.svg/64px-Globe_icon.svg.png" alt="Globe" width="48" height="48">
-    <h1 style="margin: 0;">🌍 Quiz de Géographie</h1>
-  </div>
+  <h1>🌍 Quiz de Géographie</h1>
   <div class="quiz-card" id="quizContainer"></div>
   <div class="result" id="result"></div>
 
@@ -147,68 +145,42 @@
     const quizContainer = document.getElementById("quizContainer");
     const resultContainer = document.getElementById("result");
 
-    function fadeOut(element, callback) {
-      element.style.opacity = 1;
-      let last = performance.now();
-      function tick(now) {
-        let delta = now - last;
-        last = now;
-        element.style.opacity -= delta / 300;
-        if (element.style.opacity <= 0) {
-          element.style.opacity = 0;
-          if (callback) callback();
-        } else {
-          requestAnimationFrame(tick);
-        }
-      }
-      requestAnimationFrame(tick);
-    }
-
-    function fadeIn(element) {
-      element.style.opacity = 0;
-      let last = performance.now();
-      function tick(now) {
-        let delta = now - last;
-        last = now;
-        element.style.opacity = Math.min(parseFloat(element.style.opacity) + delta / 300, 1);
-        if (element.style.opacity < 1) {
-          requestAnimationFrame(tick);
-        }
-      }
-      requestAnimationFrame(tick);
-    }
-
+    // Fonction pour afficher la question avec une transition d'opacité simple
     function showQuestion() {
-      localStorage.setItem('currentQuestion', currentQuestion);
-      localStorage.setItem('score', score);
+      quizContainer.style.opacity = 0;
 
-      const q = questions[currentQuestion];
-      quizContainer.innerHTML = `
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-          <p><strong>Question ${currentQuestion + 1} / ${questions.length}</strong></p>
-          <p><strong>Score : ${score}</strong></p>
-        </div>
-        <p>${q.question}</p>
-        <div class="choices">
-          ${q.choices.map((choice, i) =>
-            `<label><input type="radio" name="choice" value="${i}"> ${choice}</label>`
-          ).join("")}
-        </div>
-        <div class="feedback" id="feedback"></div>
-        <button class="btn" id="nextBtn" onclick="nextQuestion()" disabled>Question suivante</button>
-      `;
+      setTimeout(() => {
+        localStorage.setItem('currentQuestion', currentQuestion);
+        localStorage.setItem('score', score);
 
-      selected = null;
-      document.querySelectorAll('input[name="choice"]').forEach(input => {
-        input.addEventListener('change', (e) => {
-          selected = parseInt(e.target.value);
-          validateAnswer();
+        const q = questions[currentQuestion];
+        quizContainer.innerHTML = `
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+            <p><strong>Question ${currentQuestion + 1} / ${questions.length}</strong></p>
+            <p><strong>Score : ${score}</strong></p>
+          </div>
+          <p>${q.question}</p>
+          <div class="choices">
+            ${q.choices.map((choice, i) =>
+              `<label><input type="radio" name="choice" value="${i}"> ${choice}</label>`
+            ).join("")}
+          </div>
+          <div class="feedback" id="feedback"></div>
+          <button class="btn" id="nextBtn" onclick="nextQuestion()" disabled>Question suivante</button>
+        `;
+
+        selected = null;
+        document.querySelectorAll('input[name="choice"]').forEach(input => {
+          input.addEventListener('change', (e) => {
+            selected = parseInt(e.target.value);
+            validateAnswer();
+          });
         });
-      });
 
-      document.addEventListener("keydown", handleEnter);
+        document.addEventListener("keydown", handleEnter);
 
-      fadeIn(quizContainer);
+        quizContainer.style.opacity = 1;
+      }, 300);
     }
 
     function validateAnswer() {
@@ -247,14 +219,15 @@
 
     function nextQuestion() {
       document.removeEventListener("keydown", handleEnter);
-      fadeOut(quizContainer, () => {
+      quizContainer.style.opacity = 0;
+      setTimeout(() => {
         currentQuestion++;
         if (currentQuestion < questions.length) {
           showQuestion();
         } else {
           showResult();
         }
-      });
+      }, 300);
     }
 
     function showResult() {
@@ -277,7 +250,6 @@
       showQuestion();
     }
 
-    quizContainer.style.opacity = 0;
     showQuestion();
   </script>
 </body>
