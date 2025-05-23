@@ -31,7 +31,7 @@
       margin-bottom: 10px;
       cursor: pointer;
     }
-    .result, .feedback {
+    .feedback, .result {
       font-weight: bold;
       margin-top: 15px;
       text-align: center;
@@ -101,41 +101,44 @@
           `<label><input type="radio" name="choice" value="${i}"> ${choice}</label>`
         ).join("")}
       </div>
-      <button class="btn" onclick="validateAnswer()">Valider la réponse</button>
       <div class="feedback" id="feedback"></div>
+      <button class="btn" id="nextBtn" onclick="nextQuestion()" disabled>Question suivante</button>
     `;
+
     selected = null;
     document.querySelectorAll('input[name="choice"]').forEach(input => {
-      input.addEventListener('change', (e) => selected = parseInt(e.target.value));
+      input.addEventListener('change', (e) => {
+        selected = parseInt(e.target.value);
+        validateAnswer();
+      });
     });
+
+    document.addEventListener("keydown", handleEnter);
   }
 
   function validateAnswer() {
     const feedback = document.getElementById("feedback");
-    if (selected === null) {
-      feedback.textContent = "👉 Sélectionne une réponse avant de valider.";
-      return;
-    }
-
     const correct = questions[currentQuestion].answer;
+
     if (selected === correct) {
-      score++;
       feedback.innerHTML = "✅ Bonne réponse !";
+      score++;
     } else {
-      feedback.innerHTML = `❌ Mauvaise réponse. La bonne réponse était : <strong>${questions[currentQuestion].choices[correct]}</strong>`;
+      feedback.innerHTML = `❌ Mauvaise réponse. Réponse correcte : <strong>${questions[currentQuestion].choices[correct]}</strong>`;
     }
 
-    // Désactive les inputs
     document.querySelectorAll('input[name="choice"]').forEach(input => input.disabled = true);
+    document.getElementById("nextBtn").disabled = false;
+  }
 
-    // Affiche le bouton suivant ou le score
-    const container = document.getElementById("quizContainer");
-    container.innerHTML += `
-      <button class="btn" onclick="nextQuestion()">Suivant</button>
-    `;
+  function handleEnter(event) {
+    if (event.key === "Enter" && !document.getElementById("nextBtn").disabled) {
+      nextQuestion();
+    }
   }
 
   function nextQuestion() {
+    document.removeEventListener("keydown", handleEnter);
     currentQuestion++;
     if (currentQuestion < questions.length) {
       showQuestion();
