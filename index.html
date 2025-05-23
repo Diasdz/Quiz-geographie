@@ -1,312 +1,304 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Geography Quiz - 100 Questions</title>
-<style>
-  body {
-    margin: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(to bottom right, #ede0d4, #d6ccc2);
-    color: #3e2f23;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-  }
-  h1 {
-    font-family: 'Nunito', sans-serif;
-    font-weight: 700;
-    font-size: 3em;
-    color: #4b3b2b;
-    background: #f0e9de;
-    border-radius: 18px;
-    padding: 18px 40px;
-    box-shadow: 0 8px 15px rgba(75, 59, 43, 0.12);
-    text-align: center;
-    max-width: 600px;
-    margin-bottom: 30px;
-    user-select: none;
-    letter-spacing: 0.06em;
-    transition: background-color 0.3s ease;
-  }
-  h1:hover {
-    background-color: #e7dfd3;
-    cursor: default;
-  }
-  .quiz-card {
-    background: #fffaf4;
-    border-radius: 20px;
-    padding: 30px 25px;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-    max-width: 600px;
-    width: 100%;
-    opacity: 1;
-    transition: opacity 0.5s ease;
-  }
-  .choices {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-    margin-top: 20px;
-  }
-  .choices label {
-    background: #f5eee6;
-    padding: 14px 16px;
-    border-radius: 12px;
-    box-shadow: 2px 2px 6px rgba(0,0,0,0.07);
-    cursor: pointer;
-    transition: all 0.25s ease;
-    display: flex;
-    align-items: center;
-  }
-  .choices label:hover {
-    background: #ede0d4;
-  }
-  .choices input[type="radio"] {
-    margin-right: 8px;
-  }
-  .correct {
-    background-color: #c8e6c9 !important;
-    border: 2px solid #388e3c;
-    color: #2e7d32;
-  }
-  .incorrect {
-    background-color: #ffcdd2 !important;
-    border: 2px solid #c62828;
-    color: #b71c1c;
-  }
-  .feedback {
-    font-weight: bold;
-    margin-top: 15px;
-    text-align: center;
-  }
-  .btn {
-    background-color: #a1887f;
-    color: white;
-    padding: 14px 24px;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    margin: 30px auto 0;
-    display: block;
-    font-size: 1em;
-    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
-    transition: background 0.3s ease, transform 0.1s ease;
-  }
-  .btn:hover {
-    background-color: #8d6e63;
-    transform: translateY(-2px);
-  }
-  .result {
-    text-align: center;
-    font-size: 1.4em;
-    font-weight: bold;
-    margin-top: 30px;
-  }
-  @media (max-width: 600px) {
-    .choices {
-      grid-template-columns: 1fr;
-    }
-    .quiz-card {
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Geography Quiz</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom right, #ede0d4, #d6ccc2);
+      color: #3e2f23;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       padding: 20px;
-    }
-    .btn {
-      width: 100%;
     }
     h1 {
       font-size: 2.5em;
-      padding: 14px 20px;
+      color: #5d4037;
+      font-weight: 900;
+      letter-spacing: 1.5px;
+      text-shadow: 2px 2px 5px rgba(93,64,55,0.4);
+      margin-bottom: 20px;
+      border-radius: 15px;
+      padding: 10px 25px;
+      background: #fffaf4cc;
+      box-shadow: 0 4px 15px rgba(93,64,55,0.3);
+      user-select: none;
     }
-  }
-</style>
+    .quiz-card {
+      background: #fffaf4;
+      border-radius: 20px;
+      padding: 30px 25px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+      max-width: 600px;
+      width: 100%;
+    }
+    .choices {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-top: 20px;
+    }
+    .choices label {
+      background: #f5eee6;
+      padding: 14px 16px;
+      border-radius: 12px;
+      box-shadow: 2px 2px 6px rgba(0,0,0,0.07);
+      cursor: pointer;
+      transition: background 0.3s ease;
+      display: flex;
+      align-items: center;
+      user-select: none;
+    }
+    .choices label:hover {
+      background: #ede0d4;
+    }
+    .choices input[type="radio"] {
+      margin-right: 8px;
+      cursor: pointer;
+    }
+    .correct {
+      background-color: #c8e6c9 !important;
+      border: 2px solid #388e3c;
+      color: #2e7d32;
+    }
+    .incorrect {
+      background-color: #ffcdd2 !important;
+      border: 2px solid #c62828;
+      color: #b71c1c;
+    }
+    .feedback {
+      font-weight: bold;
+      margin-top: 15px;
+      text-align: center;
+      min-height: 24px;
+      user-select: none;
+    }
+    .btn {
+      background-color: #a1887f;
+      color: white;
+      padding: 14px 24px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      margin: 30px auto 0;
+      display: block;
+      font-size: 1em;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+      transition: background 0.3s ease, transform 0.1s ease;
+      user-select: none;
+    }
+    .btn:hover {
+      background-color: #8d6e63;
+      transform: translateY(-2px);
+    }
+    .result {
+      text-align: center;
+      font-size: 1.4em;
+      font-weight: bold;
+      margin-top: 30px;
+      user-select: none;
+    }
+    @media (max-width: 600px) {
+      .choices {
+        grid-template-columns: 1fr;
+      }
+      .quiz-card {
+        padding: 20px;
+      }
+      .btn {
+        width: 100%;
+      }
+    }
+  </style>
 </head>
 <body>
-<h1>Geography Quiz - 100 Questions</h1>
-<div class="quiz-card" id="quizContainer"></div>
-<div class="result" id="result"></div>
+  <h1>🌍 Geography Quiz</h1>
+  <div class="quiz-card" id="quizContainer"></div>
+  <div class="result" id="result"></div>
 
-<script>
-const questions = [
-  {question: "What is the capital of Australia?", choices: ["Sydney", "Melbourne", "Canberra", "Brisbane"], answer: 2},
-  {question: "Which river is the longest in the world?", choices: ["Amazon", "Nile", "Yangtze", "Mississippi"], answer: 1},
-  {question: "Mount Everest is located in which mountain range?", choices: ["Andes", "Alps", "Himalayas", "Rockies"], answer: 2},
-  {question: "Which country has the largest land area?", choices: ["USA", "Canada", "Russia", "China"], answer: 2},
-  {question: "What is the smallest country by land area?", choices: ["Monaco", "Vatican City", "Nauru", "San Marino"], answer: 1},
-  {question: "Which continent has the most countries?", choices: ["Africa", "Asia", "Europe", "South America"], answer: 0},
-  {question: "Which desert is the largest in the world?", choices: ["Sahara", "Gobi", "Kalahari", "Arctic"], answer: 3},
-  {question: "Which ocean is the deepest?", choices: ["Atlantic", "Indian", "Pacific", "Arctic"], answer: 2},
-  {question: "Which country has the most official languages?", choices: ["South Africa", "India", "Switzerland", "Papua New Guinea"], answer: 3},
-  {question: "What is the capital city of Japan?", choices: ["Osaka", "Kyoto", "Tokyo", "Nagoya"], answer: 2},
-  {question: "Which U.S. state is known as the 'Sunshine State'?", choices: ["California", "Florida", "Texas", "Arizona"], answer: 1},
-  {question: "Which river flows through Paris?", choices: ["Seine", "Thames", "Danube", "Rhine"], answer: 0},
-  {question: "The Great Barrier Reef is located in which country?", choices: ["Australia", "New Zealand", "Fiji", "Philippines"], answer: 0},
-  {question: "Which European city is known as 'The Eternal City'?", choices: ["Athens", "Rome", "Paris", "Istanbul"], answer: 1},
-  {question: "Which country is known as the Land of the Rising Sun?", choices: ["China", "South Korea", "Japan", "Thailand"], answer: 2},
-  {question: "Which mountain is the highest peak in Africa?", choices: ["Mount Kenya", "Kilimanjaro", "Atlas Mountains", "Rwenzori Mountains"], answer: 1},
-  {question: "Which country has the most pyramids?", choices: ["Egypt", "Sudan", "Mexico", "Peru"], answer: 1},
-  {question: "Which country is the largest producer of coffee?", choices: ["Colombia", "Vietnam", "Brazil", "Ethiopia"], answer: 2},
-  {question: "Which continent is the driest?", choices: ["Africa", "Antarctica", "Asia", "Australia"], answer: 1},
-  {question: "Which country is famous for the fjords?", choices: ["Iceland", "Norway", "Sweden", "Finland"], answer: 1},
-  {question: "What is the largest island in the world?", choices: ["Greenland", "New Guinea", "Borneo", "Madagascar"], answer: 0},
-  {question: "Which city is the capital of Canada?", choices: ["Toronto", "Montreal", "Ottawa", "Vancouver"], answer: 2},
-  {question: "Which country has a maple leaf on its flag?", choices: ["USA", "Canada", "UK", "Australia"], answer: 1},
-  {question: "Which river forms part of the border between the USA and Mexico?", choices: ["Colorado River", "Rio Grande", "Mississippi", "Pecos River"], answer: 1},
-  {question: "Which country is the smallest in South America?", choices: ["Suriname", "Guyana", "French Guiana", "Ecuador"], answer: 0},
-  {question: "What is the capital of South Korea?", choices: ["Seoul", "Busan", "Incheon", "Daegu"], answer: 0},
-  {question: "Which country is the largest in Africa?", choices: ["Nigeria", "Algeria", "Sudan", "Egypt"], answer: 1},
-  {question: "Which continent is also a country?", choices: ["Greenland", "Australia", "Iceland", "Madagascar"], answer: 1},
-  {question: "Which desert covers much of Mongolia and northern China?", choices: ["Sahara", "Gobi", "Kalahari", "Thar"], answer: 1},
-  {question: "Which U.S. state has the most active volcanoes?", choices: ["Alaska", "Hawaii", "California", "Washington"], answer: 0},
-  {question: "Which city is known as the City of Canals?", choices: ["Venice", "Amsterdam", "Bruges", "Bangkok"], answer: 0},
-  {question: "Which sea is shrinking due to irrigation projects?", choices: ["Dead Sea", "Black Sea", "Aral Sea", "Caspian Sea"], answer: 2},
-  {question: "Which mountain range separates Europe and Asia?", choices: ["Alps", "Urals", "Carpathians", "Caucasus"], answer: 1},
-  {question: "What is the currency of the United Kingdom?", choices: ["Euro", "Pound Sterling", "Dollar", "Franc"], answer: 1},
-  {question: "Which city is the capital of Egypt?", choices: ["Alexandria", "Cairo", "Luxor", "Giza"], answer: 1},
-  {question: "Which country has the most natural lakes?", choices: ["USA", "Canada", "Russia", "Finland"], answer: 1},
-  {question: "Which country is home to the Serengeti National Park?", choices: ["Kenya", "Tanzania", "South Africa", "Botswana"], answer: 1},
-  {question: "Which is the largest bay in the world?", choices: ["Bay of Bengal", "Hudson Bay", "San Francisco Bay", "Bay of Biscay"], answer: 1},
-  {question: "Which country does not border the Mediterranean Sea?", choices: ["Italy", "Jordan", "Egypt", "Greece"], answer: 1},
-  {question: "Which U.S. city is known as the 'Windy City'?", choices: ["Chicago", "Boston", "San Francisco", "New York"], answer: 0},
-  {question: "Which country has the largest population in the world?", choices: ["USA", "India", "China", "Indonesia"], answer: 2},
-  {question: "Which ocean lies between Africa and Australia?", choices: ["Atlantic", "Pacific", "Indian", "Arctic"], answer: 2},
-  {question: "What is the capital city of Brazil?", choices: ["Rio de Janeiro", "São Paulo", "Brasília", "Salvador"], answer: 2},
-  {question: "Which country is famous for the Taj Mahal?", choices: ["India", "Pakistan", "Bangladesh", "Nepal"], answer: 0},
-  {question: "Which U.S. state is known as the 'Land of 10,000 Lakes'?", choices: ["Wisconsin", "Minnesota", "Michigan", "Alaska"], answer: 1},
-  {question: "Which is the tallest waterfall in the world?", choices: ["Niagara Falls", "Victoria Falls", "Angel Falls", "Iguazu Falls"], answer: 2},
-  {question: "Which country is known as the 'Pearl of Africa'?", choices: ["Uganda", "Kenya", "Rwanda", "Tanzania"], answer: 0},
-  {question: "Which country has a city called 'Marrakech'?", choices: ["Morocco", "Algeria", "Tunisia", "Egypt"], answer: 0},
-  {question: "Which U.S. national park is famous for its geysers?", choices: ["Yosemite", "Yellowstone", "Grand Canyon", "Zion"], answer: 1},
-  {question: "Which country is the home of the ancient city of Petra?", choices: ["Lebanon", "Jordan", "Syria", "Israel"], answer: 1},
-  {question: "Which country is the largest producer of diamonds?", choices: ["Russia", "Botswana", "South Africa", "Canada"], answer: 0},
-  {question: "Which continent is the Sahara Desert located on?", choices: ["Asia", "Africa", "Australia", "South America"], answer: 1},
-  {question: "Which city is the capital of Thailand?", choices: ["Bangkok", "Phuket", "Chiang Mai", "Pattaya"], answer: 0},
-  {question: "Which river runs through Baghdad?", choices: ["Tigris", "Euphrates", "Nile", "Jordan"], answer: 0},
-  {question: "Which country is known for its fjords and midnight sun?", choices: ["Sweden", "Finland", "Norway", "Iceland"], answer: 2},
-  {question: "Which U.S. state is famous for its jazz music?", choices: ["Louisiana", "New York", "California", "Texas"], answer: 0},
-  {question: "Which country has the largest Muslim population?", choices: ["Indonesia", "Pakistan", "India", "Bangladesh"], answer: 0},
-  {question: "Which continent is the coldest?", choices: ["North America", "Asia", "Antarctica", "Europe"], answer: 2},
-  {question: "Which is the largest city in Africa?", choices: ["Lagos", "Cairo", "Kinshasa", "Johannesburg"], answer: 0},
-  {question: "What is the name of the sea between Saudi Arabia and Africa?", choices: ["Red Sea", "Dead Sea", "Arabian Sea", "Mediterranean Sea"], answer: 0},
-  {question: "Which is the highest capital city in the world?", choices: ["La Paz", "Quito", "Kathmandu", "Thimphu"], answer: 0},
-  {question: "Which country owns the Galápagos Islands?", choices: ["Colombia", "Ecuador", "Peru", "Chile"], answer: 1},
-  {question: "Which country is home to the Amazon Rainforest?", choices: ["Brazil", "Colombia", "Venezuela", "Peru"], answer: 0},
-  {question: "Which ocean surrounds the Maldives?", choices: ["Atlantic", "Indian", "Pacific", "Arctic"], answer: 1},
-  {question: "Which country is known as the 'Land of Fire and Ice'?", choices: ["Iceland", "Greenland", "Norway", "Sweden"], answer: 0},
-  {question: "What is the capital city of Turkey?", choices: ["Istanbul", "Ankara", "Izmir", "Antalya"], answer: 1},
-  {question: "Which mountain is the highest in North America?", choices: ["Mount Logan", "Denali", "Mount Rainier", "Mount Whitney"], answer: 1},
-  {question: "Which U.S. state has the longest coastline?", choices: ["Florida", "California", "Alaska", "Hawaii"], answer: 2},
-  {question: "Which country is known as the Land of a Thousand Lakes?", choices: ["Finland", "Sweden", "Norway", "Canada"], answer: 0},
-  {question: "Which river runs through London?", choices: ["Thames", "Seine", "Danube", "Rhine"], answer: 0},
-  {question: "Which city is the capital of Argentina?", choices: ["Buenos Aires", "Cordoba", "Rosario", "Mendoza"], answer: 0},
-  {question: "Which country is home to the Great Wall?", choices: ["China", "Mongolia", "Japan", "Korea"], answer: 0},
-  {question: "Which country has the most volcanoes?", choices: ["Indonesia", "Japan", "USA", "Italy"], answer: 0},
-  {question: "Which continent is known as the Dark Continent?", choices: ["Asia", "Africa", "Australia", "South America"], answer: 1},
-  {question: "Which country has the most UNESCO World Heritage Sites?", choices: ["Italy", "China", "Spain", "France"], answer: 0},
-  {question: "Which country is shaped like a boot?", choices: ["Italy", "Greece", "Spain", "Portugal"], answer: 0},
-  {question: "Which is the largest peninsula in the world?", choices: ["Arabian Peninsula", "Iberian Peninsula", "Scandinavian Peninsula", "Korean Peninsula"], answer: 0},
-  {question: "Which country is famous for maple syrup?", choices: ["USA", "Canada", "Mexico", "Russia"], answer: 1},
-  {question: "Which country borders both the Atlantic and Pacific Oceans?", choices: ["USA", "Canada", "Mexico", "Chile"], answer: 0},
-  {question: "What is the capital of New Zealand?", choices: ["Auckland", "Christchurch", "Wellington", "Hamilton"], answer: 2},
-  {question: "Which country has the largest coral reef?", choices: ["Australia", "Philippines", "Indonesia", "Malaysia"], answer: 0},
-  {question: "Which is the smallest continent by land area?", choices: ["Europe", "Australia", "Antarctica", "South America"], answer: 1},
-  {question: "Which country is the largest producer of oil?", choices: ["Saudi Arabia", "Russia", "USA", "Canada"], answer: 1},
-  {question: "Which country is known for the ancient Inca city of Machu Picchu?", choices: ["Peru", "Chile", "Bolivia", "Ecuador"], answer: 0},
-  {question: "Which city is the capital of France?", choices: ["Lyon", "Marseille", "Paris", "Toulouse"], answer: 2},
-  {question: "Which country is the largest in the Middle East?", choices: ["Iran", "Saudi Arabia", "Iraq", "Turkey"], answer: 1},
-  {question: "Which continent is the largest by land area?", choices: ["Asia", "Africa", "North America", "Europe"], answer: 0},
-  {question: "Which river flows through Cairo?", choices: ["Nile", "Tigris", "Euphrates", "Jordan"], answer: 0},
-  {question: "Which U.S. state is the Grand Canyon located in?", choices: ["Nevada", "Arizona", "Utah", "New Mexico"], answer: 1},
-  {question: "Which country has the most volcanoes in Europe?", choices: ["Italy", "Iceland", "Greece", "Turkey"], answer: 0},
-  {question: "Which is the longest river in Europe?", choices: ["Volga", "Danube", "Rhine", "Dnieper"], answer: 0},
-  {question: "Which city is the capital of Russia?", choices: ["Saint Petersburg", "Moscow", "Kazan", "Novosibirsk"], answer: 1},
-  {question: "Which ocean borders the east coast of the United States?", choices: ["Atlantic", "Pacific", "Indian", "Arctic"], answer: 0},
-  {question: "Which is the largest lake in Africa?", choices: ["Lake Victoria", "Lake Tanganyika", "Lake Malawi", "Lake Chad"], answer: 0},
-  {question: "Which country has the longest coastline?", choices: ["USA", "Australia", "Canada", "Russia"], answer: 2},
-  {question: "Which mountain range runs through Italy?", choices: ["Alps", "Carpathians", "Pyrenees", "Apennines"], answer: 3},
-  {question: "Which country is the home of the ancient Mayan civilization?", choices: ["Mexico", "Peru", "Brazil", "Argentina"], answer: 0},
-  {question: "Which country is home to the city of Casablanca?", choices: ["Morocco", "Algeria", "Tunisia", "Libya"], answer: 0},
-  {question: "Which desert is located in southern Africa?", choices: ["Sahara", "Kalahari", "Gobi", "Thar"], answer: 1},
-  {question: "Which is the largest city in the USA by population?", choices: ["Los Angeles", "Chicago", "New York City", "Houston"], answer: 2},
-  {question: "Which country borders the most countries in Europe?", choices: ["Russia", "Germany", "France", "Poland"], answer: 0}
-];
+  <script>
+    const questions = [
+      { question: "What is the capital of Canada?", choices: ["Toronto", "Vancouver", "Ottawa", "Montreal"], answer: 2 },
+      { question: "Which is the longest river in the world?", choices: ["Amazon", "Nile", "Yangtze", "Mississippi"], answer: 1 },
+      { question: "Which country has the largest population?", choices: ["USA", "India", "China", "Indonesia"], answer: 2 },
+      { question: "In which continent is the Sahara Desert?", choices: ["Egypt", "Saudi Arabia", "Chile", "Australia"], answer: 0 },
+      { question: "Which ocean borders the west coast of France?", choices: ["Atlantic", "Arctic", "Indian", "Pacific"], answer: 0 },
+      // ... (add 95 more questions in similar format)
+      { question: "Which country is famous for its geysers?", choices: ["Yosemite", "Yellowstone", "Grand Canyon", "Zion"], answer: 1 },
+      { question: "Which country is home to the ancient city of Petra?", choices: ["Lebanon", "Jordan", "Syria", "Israel"], answer: 1 },
+      { question: "Which country is the largest producer of diamonds?", choices: ["Russia", "Botswana", "South Africa", "Canada"], answer: 0 },
+      { question: "Which continent is the Sahara Desert located on?", choices: ["Asia", "Africa", "Australia", "South America"], answer: 1 },
+      { question: "Which city is the capital of Thailand?", choices: ["Bangkok", "Phuket", "Chiang Mai", "Pattaya"], answer: 0 },
+      { question: "Which river runs through Baghdad?", choices: ["Tigris", "Euphrates", "Nile", "Jordan"], answer: 0 },
+      { question: "Which country is known for its fjords and midnight sun?", choices: ["Sweden", "Finland", "Norway", "Iceland"], answer: 2 },
+      { question: "Which U.S. state is famous for its jazz music?", choices: ["Louisiana", "New York", "California", "Texas"], answer: 0 },
+      { question: "Which country has the largest Muslim population?", choices: ["Indonesia", "Pakistan", "India", "Bangladesh"], answer: 0 },
+      { question: "Which continent is the coldest?", choices: ["North America", "Asia", "Antarctica", "Europe"], answer: 2 },
+      { question: "Which is the largest city in Africa?", choices: ["Lagos", "Cairo", "Kinshasa", "Johannesburg"], answer: 0 },
+      { question: "What is the name of the sea between Saudi Arabia and Africa?", choices: ["Red Sea", "Dead Sea", "Arabian Sea", "Mediterranean Sea"], answer: 0 },
+      { question: "Which is the highest capital city in the world?", choices: ["La Paz", "Quito", "Kathmandu", "Thimphu"], answer: 0 },
+      { question: "Which country owns the Galápagos Islands?", choices: ["Colombia", "Ecuador", "Peru", "Chile"], answer: 1 },
+      { question: "Which country is home to the Amazon Rainforest?", choices: ["Brazil", "Colombia", "Venezuela", "Peru"], answer: 0 },
+      { question: "Which ocean surrounds the Maldives?", choices: ["Atlantic", "Indian", "Pacific", "Arctic"], answer: 1 },
+      { question: "Which country is known as the 'Land of Fire and Ice'?", choices: ["Iceland", "Greenland", "Norway", "Sweden"], answer: 0 },
+      { question: "What is the capital city of Turkey?", choices: ["Istanbul", "Ankara", "Izmir", "Antalya"], answer: 1 },
+      { question: "Which mountain is the highest in North America?", choices: ["Mount Logan", "Denali", "Mount Rainier", "Mount Whitney"], answer: 1 },
+      { question: "Which U.S. state has the longest coastline?", choices: ["Florida", "California", "Alaska", "Hawaii"], answer: 2 },
+      { question: "Which country is known as the Land of a Thousand Lakes?", choices: ["Finland", "Sweden", "Norway", "Canada"], answer: 0 },
+      { question: "Which river runs through London?", choices: ["Thames", "Seine", "Danube", "Rhine"], answer: 0 },
+      { question: "Which city is the capital of Argentina?", choices: ["Buenos Aires", "Cordoba", "Rosario", "Mendoza"], answer: 0 },
+      { question: "Which country is home to the Great Wall?", choices: ["China", "Mongolia", "Japan", "Korea"], answer: 0 },
+      { question: "Which country has the most volcanoes?", choices: ["Indonesia", "Japan", "USA", "Italy"], answer: 0 },
+      { question: "Which continent is known as the Dark Continent?", choices: ["Asia", "Africa", "Australia", "South America"], answer: 1 },
+      { question: "Which country has the most UNESCO World Heritage Sites?", choices: ["Italy", "China", "Spain", "France"], answer: 0 },
+      { question: "Which country is shaped like a boot?", choices: ["Italy", "Greece", "Spain", "Portugal"], answer: 0 },
+      { question: "Which is the smallest country in the world?", choices: ["Monaco", "Vatican City", "Nauru", "San Marino"], answer: 1 },
+      { question: "Which country is known for the fjords?", choices: ["Norway", "Sweden", "Finland", "Denmark"], answer: 0 },
+      { question: "Which desert is the largest hot desert?", choices: ["Sahara", "Gobi", "Kalahari", "Mojave"], answer: 0 },
+      { question: "Which is the deepest ocean trench?", choices: ["Mariana Trench", "Tonga Trench", "Puerto Rico Trench", "Java Trench"], answer: 0 },
+      { question: "Which continent has the most countries?", choices: ["Asia", "Africa", "Europe", "South America"], answer: 1 },
+      { question: "Which city is famous for its canals and gondolas?", choices: ["Venice", "Amsterdam", "Bangkok", "Bruges"], answer: 0 },
+      { question: "Which country is the largest island in the world?", choices: ["Australia", "Greenland", "Madagascar", "Borneo"], answer: 1 },
+      { question: "Which continent is known as the birthplace of civilization?", choices: ["Europe", "Asia", "Africa", "South America"], answer: 1 },
+      { question: "Which country is famous for the Taj Mahal?", choices: ["Pakistan", "India", "Bangladesh", "Nepal"], answer: 1 },
+      { question: "Which U.S. state is known as the 'Sunshine State'?", choices: ["California", "Florida", "Texas", "Arizona"], answer: 1 },
+      { question: "Which river is the longest in Europe?", choices: ["Volga", "Danube", "Rhine", "Seine"], answer: 0 },
+      { question: "Which country has the largest number of lakes?", choices: ["Canada", "Finland", "Russia", "USA"], answer: 0 },
+      { question: "Which country has the largest land area?", choices: ["USA", "China", "Russia", "Canada"], answer: 2 },
+      { question: "Which city is known as the 'City of Light'?", choices: ["Paris", "London", "New York", "Rome"], answer: 0 },
+      { question: "Which country does the Great Barrier Reef belong to?", choices: ["Australia", "Fiji", "Philippines", "Indonesia"], answer: 0 },
+      { question: "Which country is famous for the Pyramids of Giza?", choices: ["Egypt", "Sudan", "Morocco", "Libya"], answer: 0 },
+      { question: "Which mountain range separates Europe and Asia?", choices: ["Alps", "Carpathians", "Ural Mountains", "Himalayas"], answer: 2 },
+      { question: "Which country is the largest archipelago in the world?", choices: ["Indonesia", "Philippines", "Japan", "Maldives"], answer: 0 },
+      { question: "Which country is home to Mount Kilimanjaro?", choices: ["Kenya", "Tanzania", "Uganda", "Ethiopia"], answer: 1 },
+      { question: "Which country is known for its tulips and windmills?", choices: ["Netherlands", "Belgium", "Denmark", "Germany"], answer: 0 },
+      { question: "Which river flows through Paris?", choices: ["Seine", "Thames", "Danube", "Rhine"], answer: 0 },
+      { question: "Which country is known as the 'Land of the Rising Sun'?", choices: ["Japan", "China", "South Korea", "Thailand"], answer: 0 },
+      { question: "Which U.S. city is nicknamed the 'Big Apple'?", choices: ["New York", "Chicago", "Los Angeles", "San Francisco"], answer: 0 },
+      { question: "Which desert is found in Australia?", choices: ["Great Victoria Desert", "Sahara", "Gobi", "Kalahari"], answer: 0 },
+      { question: "Which country is the home of the Maasai people?", choices: ["Kenya", "Tanzania", "Uganda", "South Africa"], answer: 0 },
+      { question: "Which country is famous for the Colosseum?", choices: ["Italy", "Greece", "Turkey", "Spain"], answer: 0 },
+      { question: "Which continent is the Amazon Rainforest located in?", choices: ["South America", "Africa", "Asia", "Australia"], answer: 0 },
+      { question: "Which country is known for sushi?", choices: ["China", "Japan", "Thailand", "Vietnam"], answer: 1 },
+      { question: "Which country borders both the Atlantic and Mediterranean?", choices: ["Spain", "Portugal", "France", "Morocco"], answer: 0 },
+      { question: "Which country is famous for the Kremlin?", choices: ["Russia", "Ukraine", "Poland", "Belarus"], answer: 0 },
+      { question: "Which country has the most official languages?", choices: ["South Africa", "India", "Switzerland", "Belgium"], answer: 0 },
+      { question: "Which is the largest desert in Asia?", choices: ["Gobi", "Thar", "Karakum", "Kyzylkum"], answer: 0 },
+      { question: "Which city is the capital of Australia?", choices: ["Sydney", "Melbourne", "Canberra", "Brisbane"], answer: 2 },
+      { question: "Which country is the world's largest producer of coffee?", choices: ["Vietnam", "Brazil", "Colombia", "Ethiopia"], answer: 1 },
+      { question: "Which is the tallest mountain in the world?", choices: ["K2", "Everest", "Kangchenjunga", "Lhotse"], answer: 1 },
+      { question: "Which river flows through Cairo?", choices: ["Nile", "Tigris", "Euphrates", "Jordan"], answer: 0 },
+      { question: "Which country is known for its kangaroos?", choices: ["South Africa", "Australia", "New Zealand", "Canada"], answer: 1 },
+      { question: "Which is the largest island in the Caribbean?", choices: ["Jamaica", "Cuba", "Hispaniola", "Puerto Rico"], answer: 1 },
+      { question: "Which country is home to the Dead Sea?", choices: ["Jordan", "Israel", "Palestine", "All of the above"], answer: 3 },
+      { question: "Which continent is known as the 'Dark Continent'?", choices: ["Africa", "Asia", "Europe", "South America"], answer: 0 },
+      { question: "Which country is the smallest in South America?", choices: ["Suriname", "Guyana", "French Guiana", "Ecuador"], answer: 0 },
+      { question: "Which city is known as the 'Eternal City'?", choices: ["Rome", "Athens", "Jerusalem", "Cairo"], answer: 0 },
+      { question: "Which country is famous for the Eiffel Tower?", choices: ["France", "Italy", "USA", "Germany"], answer: 0 },
+      { question: "Which desert is located in China and Mongolia?", choices: ["Gobi", "Sahara", "Kalahari", "Atacama"], answer: 0 },
+      { question: "Which country has the longest coastline?", choices: ["Canada", "Australia", "Russia", "USA"], answer: 0 },
+      { question: "Which is the deepest lake in the world?", choices: ["Lake Baikal", "Lake Superior", "Caspian Sea", "Lake Tanganyika"], answer: 0 },
+      { question: "Which country is home to the Great Rift Valley?", choices: ["Kenya", "Ethiopia", "Tanzania", "All of the above"], answer: 3 },
+      { question: "Which city is the capital of Canada?", choices: ["Toronto", "Montreal", "Ottawa", "Vancouver"], answer: 2 },
+      { question: "Which country is famous for its maple syrup?", choices: ["USA", "Canada", "France", "Norway"], answer: 1 },
+      { question: "Which is the largest country in South America?", choices: ["Argentina", "Brazil", "Colombia", "Peru"], answer: 1 },
+      { question: "Which river forms part of the border between the US and Mexico?", choices: ["Colorado", "Rio Grande", "Mississippi", "Hudson"], answer: 1 },
+      { question: "Which mountain range runs along the west coast of South America?", choices: ["Andes", "Rockies", "Alps", "Himalayas"], answer: 0 },
+      { question: "Which continent is the smallest by land area?", choices: ["Europe", "Australia", "Antarctica", "South America"], answer: 1 },
+      { question: "Which country is the largest exporter of oil?", choices: ["Saudi Arabia", "Russia", "USA", "Iraq"], answer: 0 },
+      { question: "Which ocean is the warmest?", choices: ["Atlantic", "Pacific", "Indian", "Arctic"], answer: 2 },
+      { question: "Which country is the most populous in Africa?", choices: ["Nigeria", "Egypt", "South Africa", "Ethiopia"], answer: 0 },
+      { question: "Which country is home to the Great Blue Hole?", choices: ["Belize", "Mexico", "Bahamas", "Cuba"], answer: 0 }
+    ];
 
-// State variables
-let currentQuestionIndex = 0;
-let score = 0;
+    let currentQuestion = 0;
+    let score = 0;
+    let selected = null;
 
-const quizContainer = document.getElementById('quizContainer');
-const resultContainer = document.getElementById('result');
+    function showQuestion() {
+      const q = questions[currentQuestion];
+      const container = document.getElementById("quizContainer");
+      container.innerHTML = `
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+          <p><strong>Question ${currentQuestion + 1} / ${questions.length}</strong></p>
+          <p><strong>Score : ${score}</strong></p>
+        </div>
+        <p>${q.question}</p>
+        <div class="choices">
+          ${q.choices.map((choice, i) =>
+            `<label><input type="radio" name="choice" value="${i}"> ${choice}</label>`
+          ).join("")}
+        </div>
+        <div class="feedback" id="feedback"></div>
+        <button class="btn" id="nextBtn" onclick="nextQuestion()" disabled>Next Question</button>
+      `;
 
-function showQuestion() {
-  if (currentQuestionIndex >= questions.length) {
-    quizContainer.style.display = 'none';
-    resultContainer.textContent = `Quiz completed! Your score: ${score} / ${questions.length}`;
-    return;
-  }
-  const q = questions[currentQuestionIndex];
-  let html = `<div><strong>Question ${currentQuestionIndex + 1} of ${questions.length}</strong></div>`;
-  html += `<div style="margin-top: 15px; font-size: 1.2em;">${q.question}</div>`;
-  html += '<form id="quizForm" style="margin-top: 20px;">';
-  q.choices.forEach((choice, idx) => {
-    html += `
-      <label>
-        <input type="radio" name="answer" value="${idx}" />
-        ${choice}
-      </label>
-    `;
-  });
-  html += '</form>';
-  html += '<button class="btn" id="submitBtn" disabled>Submit Answer</button>';
-  quizContainer.innerHTML = html;
+      selected = null;
+      document.querySelectorAll('input[name="choice"]').forEach(input => {
+        input.addEventListener('change', (e) => {
+          selected = parseInt(e.target.value);
+          validateAnswer();
+        });
+      });
 
-  // Enable submit only if an option is selected
-  const form = document.getElementById('quizForm');
-  const submitBtn = document.getElementById('submitBtn');
+      document.addEventListener("keydown", handleEnter);
+    }
 
-  form.addEventListener('change', () => {
-    submitBtn.disabled = false;
-  });
+    function validateAnswer() {
+      const correct = questions[currentQuestion].answer;
+      const feedback = document.getElementById("feedback");
 
-  submitBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-    checkAnswer();
-  });
-}
+      const labels = document.querySelectorAll(".choices label");
+      labels.forEach((label, index) => {
+        const input = label.querySelector("input");
+        input.disabled = true;
 
-function checkAnswer() {
-  const form = document.getElementById('quizForm');
-  const selected = form.answer.value;
-  if (selected === '') return;
+        if (index === correct) {
+          label.classList.add("correct");
+        } else if (index === selected) {
+          label.classList.add("incorrect");
+        }
+      });
 
-  const q = questions[currentQuestionIndex];
-  const labels = form.querySelectorAll('label');
+      if (selected === correct) {
+        score++;
+        feedback.innerHTML = "✅ Correct!";
+      } else {
+        feedback.innerHTML = `❌ Incorrect. The correct answer was <strong>${questions[currentQuestion].choices[correct]}</strong>`;
+      }
 
-  labels.forEach(label => {
-    label.style.pointerEvents = 'none';
-  });
+      document.getElementById("nextBtn").disabled = false;
+    }
 
-  if (parseInt(selected) === q.answer) {
-    score++;
-    labels[q.answer].classList.add('correct');
-  } else {
-    labels[parseInt(selected)].classList.add('incorrect');
-    labels[q.answer].classList.add('correct');
-  }
+    function handleEnter(event) {
+      if (event.key === "Enter" && !document.getElementById("nextBtn").disabled) {
+        nextQuestion();
+      }
+    }
 
-  document.getElementById('submitBtn').textContent = 'Next Question';
-  document.getElementById('submitBtn').disabled = false;
+    function nextQuestion() {
+      document.removeEventListener("keydown", handleEnter);
+      currentQuestion++;
+      if (currentQuestion < questions.length) {
+        showQuestion();
+      } else {
+        showResult();
+      }
+    }
 
-  document.getElementById('submitBtn').removeEventListener('click', checkAnswer);
-  document.getElementById('submitBtn').addEventListener('click', (e) => {
-    e.preventDefault();
-    currentQuestionIndex++;
+    function showResult() {
+      const container = document.getElementById("quizContainer");
+      container.innerHTML = "";
+      const result = document.getElementById("result");
+      result.innerHTML = `Quiz finished! Your final score is <strong>${score} / ${questions.length}</strong>.`;
+    }
+
+    // Start quiz
     showQuestion();
-  });
-}
-
-showQuestion();
-</script>
+  </script>
 </body>
 </html>
