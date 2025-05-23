@@ -7,7 +7,7 @@
   <style>
     body {
       margin: 0;
-      font-family: 'Segoe UI', sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: linear-gradient(to bottom right, #ede0d4, #d6ccc2);
       color: #3e2f23;
       display: flex;
@@ -16,10 +16,19 @@
       padding: 20px;
     }
     h1 {
-      font-size: 2.2em;
-      color: #5d4037;
-      text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
-      margin-bottom: 10px;
+      font-size: 3em;
+      color: #6d4c41;
+      text-shadow: 2px 2px 6px rgba(0,0,0,0.15);
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      margin-bottom: 20px;
+      border-bottom: 3px solid #a1887f;
+      padding-bottom: 10px;
+      font-family: 'Georgia', serif;
+      text-align: center;
+      width: 100%;
+      max-width: 600px;
+      user-select: none;
     }
     .quiz-card {
       background: #fffaf4;
@@ -101,11 +110,14 @@
       .btn {
         width: 100%;
       }
+      h1 {
+        font-size: 2.5em;
+      }
     }
   </style>
 </head>
 <body>
-  <h1>🌍 Quiz de Géographie</h1>
+  <h1>Quiz de Géographie</h1>
   <div class="quiz-card" id="quizContainer"></div>
   <div class="result" id="result"></div>
 
@@ -138,21 +150,17 @@
       }
     ];
 
-    let currentQuestion = parseInt(localStorage.getItem('currentQuestion')) || 0;
-    let score = parseInt(localStorage.getItem('score')) || 0;
+    let currentQuestion = 0;
+    let score = 0;
     let selected = null;
 
     const quizContainer = document.getElementById("quizContainer");
     const resultContainer = document.getElementById("result");
 
-    // Fonction pour afficher la question avec une transition d'opacité simple
     function showQuestion() {
       quizContainer.style.opacity = 0;
 
       setTimeout(() => {
-        localStorage.setItem('currentQuestion', currentQuestion);
-        localStorage.setItem('score', score);
-
         const q = questions[currentQuestion];
         quizContainer.innerHTML = `
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
@@ -207,8 +215,6 @@
       }
 
       document.getElementById("nextBtn").disabled = false;
-
-      localStorage.setItem('score', score);
     }
 
     function handleEnter(event) {
@@ -231,9 +237,6 @@
     }
 
     function showResult() {
-      localStorage.removeItem('currentQuestion');
-      localStorage.removeItem('score');
-
       quizContainer.innerHTML = "";
       resultContainer.innerHTML = `
         🎉 Quiz terminé !<br>
