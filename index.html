@@ -26,34 +26,35 @@
     .choices {
       margin-top: 15px;
     }
-    .choices button {
+    .choices label {
       display: block;
-      width: 100%;
       margin-bottom: 10px;
-      padding: 10px;
+      cursor: pointer;
+    }
+    .result, .feedback {
+      font-weight: bold;
+      margin-top: 15px;
+      text-align: center;
+    }
+    .btn {
       background-color: #a1887f;
       color: white;
+      padding: 10px 15px;
       border: none;
       border-radius: 5px;
       cursor: pointer;
+      display: block;
+      margin: 20px auto 0;
     }
-    .choices button:hover {
+    .btn:hover {
       background-color: #8d6e63;
-    }
-    .result {
-      font-size: 20px;
-      font-weight: bold;
-      text-align: center;
-      margin-top: 30px;
     }
   </style>
 </head>
 <body>
 
 <h1>🌍 Quiz de Géographie</h1>
-<div class="question-box" id="quizContainer">
-  <!-- La question apparaîtra ici -->
-</div>
+<div class="question-box" id="quizContainer"></div>
 <div class="result" id="result"></div>
 
 <script>
@@ -87,6 +88,7 @@
 
   let currentQuestion = 0;
   let score = 0;
+  let selected = null;
 
   function showQuestion() {
     const q = questions[currentQuestion];
@@ -96,23 +98,66 @@
       <p>${q.question}</p>
       <div class="choices">
         ${q.choices.map((choice, i) =>
-          `<button onclick="handleAnswer(${i})">${choice}</button>`
+          `<label><input type="radio" name="choice" value="${i}"> ${choice}</label>`
         ).join("")}
       </div>
+      <button class="btn" onclick="validateAnswer()">Valider la réponse</button>
+      <div class="feedback" id="feedback"></div>
+    `;
+    selected = null;
+    document.querySelectorAll('input[name="choice"]').forEach(input => {
+      input.addEventListener('change', (e) => selected = parseInt(e.target.value));
+    });
+  }
+
+  function validateAnswer() {
+    const feedback = document.getElementById("feedback");
+    if (selected === null) {
+      feedback.textContent = "👉 Sélectionne une réponse avant de valider.";
+      return;
+    }
+
+    const correct = questions[currentQuestion].answer;
+    if (selected === correct) {
+      score++;
+      feedback.innerHTML = "✅ Bonne réponse !";
+    } else {
+      feedback.innerHTML = `❌ Mauvaise réponse. La bonne réponse était : <strong>${questions[currentQuestion].choices[correct]}</strong>`;
+    }
+
+    // Désactive les inputs
+    document.querySelectorAll('input[name="choice"]').forEach(input => input.disabled = true);
+
+    // Affiche le bouton suivant ou le score
+    const container = document.getElementById("quizContainer");
+    container.innerHTML += `
+      <button class="btn" onclick="nextQuestion()">Suivant</button>
     `;
   }
 
-  function handleAnswer(selectedIndex) {
-    if (selectedIndex === questions[currentQuestion].answer) {
-      score++;
-    }
+  function nextQuestion() {
     currentQuestion++;
     if (currentQuestion < questions.length) {
       showQuestion();
     } else {
-      document.getElementById("quizContainer").innerHTML = "";
-      document.getElementById("result").innerHTML = `🎉 Bravo ! Vous avez obtenu <strong>${score}</strong> / <strong>${questions.length}</strong>`;
+      showResult();
     }
+  }
+
+  function showResult() {
+    document.getElementById("quizContainer").innerHTML = "";
+    document.getElementById("result").innerHTML = `
+      🎉 Vous avez obtenu <strong>${score}</strong> / <strong>${questions.length}</strong><br>
+      <button class="btn" onclick="restartQuiz()">Recommencer le quiz</button>
+    `;
+  }
+
+  function restartQuiz() {
+    currentQuestion = 0;
+    score = 0;
+    selected = null;
+    document.getElementById("result").innerHTML = "";
+    showQuestion();
   }
 
   showQuestion();
