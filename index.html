@@ -27,6 +27,8 @@
       box-shadow: 0 8px 25px rgba(0,0,0,0.15);
       max-width: 600px;
       width: 100%;
+      opacity: 1;
+      transition: opacity 0.3s ease;
     }
     .choices {
       display: grid;
@@ -104,7 +106,7 @@
 <body>
   <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;">
     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Globe_icon.svg/64px-Globe_icon.svg.png" alt="Globe" width="48" height="48">
-    <h1 style="margin: 0;"> Quiz de Géographie</h1>
+    <h1 style="margin: 0;">🌍 Quiz de Géographie</h1>
   </div>
   <div class="quiz-card" id="quizContainer"></div>
   <div class="result" id="result"></div>
@@ -138,14 +140,50 @@
       }
     ];
 
-    let currentQuestion = 0;
-    let score = 0;
+    let currentQuestion = parseInt(localStorage.getItem('currentQuestion')) || 0;
+    let score = parseInt(localStorage.getItem('score')) || 0;
     let selected = null;
 
+    const quizContainer = document.getElementById("quizContainer");
+    const resultContainer = document.getElementById("result");
+
+    function fadeOut(element, callback) {
+      element.style.opacity = 1;
+      let last = performance.now();
+      function tick(now) {
+        let delta = now - last;
+        last = now;
+        element.style.opacity -= delta / 300;
+        if (element.style.opacity <= 0) {
+          element.style.opacity = 0;
+          if (callback) callback();
+        } else {
+          requestAnimationFrame(tick);
+        }
+      }
+      requestAnimationFrame(tick);
+    }
+
+    function fadeIn(element) {
+      element.style.opacity = 0;
+      let last = performance.now();
+      function tick(now) {
+        let delta = now - last;
+        last = now;
+        element.style.opacity = Math.min(parseFloat(element.style.opacity) + delta / 300, 1);
+        if (element.style.opacity < 1) {
+          requestAnimationFrame(tick);
+        }
+      }
+      requestAnimationFrame(tick);
+    }
+
     function showQuestion() {
+      localStorage.setItem('currentQuestion', currentQuestion);
+      localStorage.setItem('score', score);
+
       const q = questions[currentQuestion];
-      const container = document.getElementById("quizContainer");
-      container.innerHTML = `
+      quizContainer.innerHTML = `
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
           <p><strong>Question ${currentQuestion + 1} / ${questions.length}</strong></p>
           <p><strong>Score : ${score}</strong></p>
@@ -169,6 +207,8 @@
       });
 
       document.addEventListener("keydown", handleEnter);
+
+      fadeIn(quizContainer);
     }
 
     function validateAnswer() {
@@ -195,6 +235,8 @@
       }
 
       document.getElementById("nextBtn").disabled = false;
+
+      localStorage.setItem('score', score);
     }
 
     function handleEnter(event) {
@@ -205,17 +247,22 @@
 
     function nextQuestion() {
       document.removeEventListener("keydown", handleEnter);
-      currentQuestion++;
-      if (currentQuestion < questions.length) {
-        showQuestion();
-      } else {
-        showResult();
-      }
+      fadeOut(quizContainer, () => {
+        currentQuestion++;
+        if (currentQuestion < questions.length) {
+          showQuestion();
+        } else {
+          showResult();
+        }
+      });
     }
 
     function showResult() {
-      document.getElementById("quizContainer").innerHTML = "";
-      document.getElementById("result").innerHTML = `
+      localStorage.removeItem('currentQuestion');
+      localStorage.removeItem('score');
+
+      quizContainer.innerHTML = "";
+      resultContainer.innerHTML = `
         🎉 Quiz terminé !<br>
         Votre score final est <strong>${score} / ${questions.length}</strong><br><br>
         <button class="btn" onclick="restartQuiz()">Recommencer le quiz</button>
@@ -226,10 +273,11 @@
       currentQuestion = 0;
       score = 0;
       selected = null;
-      document.getElementById("result").innerHTML = "";
+      resultContainer.innerHTML = "";
       showQuestion();
     }
 
+    quizContainer.style.opacity = 0;
     showQuestion();
   </script>
 </body>
