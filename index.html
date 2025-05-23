@@ -5,33 +5,50 @@
   <title>Quiz Géographie Dynamique</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background-color: #f5efe6;
-      color: #3e2723;
-      max-width: 600px;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f3ede4;
+      color: #3e2f23;
+      max-width: 700px;
       margin: auto;
-      padding: 30px 20px;
+      padding: 40px 20px;
     }
     h1 {
       text-align: center;
-      color: #4e342e;
+      color: #5d4037;
+      margin-bottom: 10px;
+    }
+    #score-display {
+      text-align: center;
+      font-size: 1.2em;
+      margin-bottom: 20px;
+      color: #795548;
     }
     .question-box {
       background-color: #fffaf4;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.05);
-      margin-bottom: 20px;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      margin-bottom: 25px;
     }
     .choices {
       margin-top: 15px;
     }
     .choices label {
       display: block;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
       cursor: pointer;
+      padding: 8px 12px;
+      background-color: #f9f5f0;
+      border-radius: 8px;
+      transition: background 0.2s;
     }
-    .feedback, .result {
+    .choices input[type="radio"] {
+      margin-right: 8px;
+    }
+    .choices label:hover {
+      background-color: #ece1d4;
+    }
+    .feedback {
       font-weight: bold;
       margin-top: 15px;
       text-align: center;
@@ -39,21 +56,29 @@
     .btn {
       background-color: #a1887f;
       color: white;
-      padding: 10px 15px;
+      padding: 12px 18px;
       border: none;
-      border-radius: 5px;
+      border-radius: 8px;
       cursor: pointer;
       display: block;
-      margin: 20px auto 0;
+      margin: 25px auto 0;
+      font-size: 1em;
     }
     .btn:hover {
       background-color: #8d6e63;
+    }
+    .result {
+      text-align: center;
+      font-size: 1.4em;
+      font-weight: bold;
+      margin-top: 20px;
     }
   </style>
 </head>
 <body>
 
 <h1>🌍 Quiz de Géographie</h1>
+<div id="score-display">Score : 0</div>
 <div class="question-box" id="quizContainer"></div>
 <div class="result" id="result"></div>
 
@@ -90,6 +115,10 @@
   let score = 0;
   let selected = null;
 
+  function updateScoreDisplay() {
+    document.getElementById("score-display").textContent = `Score : ${score}`;
+  }
+
   function showQuestion() {
     const q = questions[currentQuestion];
     const container = document.getElementById("quizContainer");
@@ -121,12 +150,13 @@
     const correct = questions[currentQuestion].answer;
 
     if (selected === correct) {
-      feedback.innerHTML = "✅ Bonne réponse !";
       score++;
+      feedback.innerHTML = "✅ Bonne réponse !";
     } else {
       feedback.innerHTML = `❌ Mauvaise réponse. Réponse correcte : <strong>${questions[currentQuestion].choices[correct]}</strong>`;
     }
 
+    updateScoreDisplay();
     document.querySelectorAll('input[name="choice"]').forEach(input => input.disabled = true);
     document.getElementById("nextBtn").disabled = false;
   }
@@ -150,7 +180,8 @@
   function showResult() {
     document.getElementById("quizContainer").innerHTML = "";
     document.getElementById("result").innerHTML = `
-      🎉 Vous avez obtenu <strong>${score}</strong> / <strong>${questions.length}</strong><br>
+      🎉 Quiz terminé !<br>
+      Votre score final est <strong>${score} / ${questions.length}</strong><br><br>
       <button class="btn" onclick="restartQuiz()">Recommencer le quiz</button>
     `;
   }
@@ -160,9 +191,11 @@
     score = 0;
     selected = null;
     document.getElementById("result").innerHTML = "";
+    updateScoreDisplay();
     showQuestion();
   }
 
+  updateScoreDisplay();
   showQuestion();
 </script>
 
