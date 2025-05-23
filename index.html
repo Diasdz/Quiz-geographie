@@ -1,43 +1,47 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Quiz Géographie</title>
+  <title>Quiz Géographie Dynamique</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #f7f1e3;
+      background-color: #f5efe6;
       color: #3e2723;
       max-width: 600px;
       margin: auto;
-      padding: 20px;
+      padding: 30px 20px;
     }
     h1 {
       text-align: center;
-      color: #5d4037;
+      color: #4e342e;
     }
-    .question {
-      margin-bottom: 20px;
-      background-color: #fff8f0;
-      padding: 15px;
+    .question-box {
+      background-color: #fffaf4;
+      padding: 20px;
       border-radius: 10px;
       box-shadow: 0 0 10px rgba(0,0,0,0.05);
+      margin-bottom: 20px;
     }
-    .choices label {
+    .choices {
+      margin-top: 15px;
+    }
+    .choices button {
       display: block;
-      margin-bottom: 8px;
-    }
-    button {
+      width: 100%;
+      margin-bottom: 10px;
+      padding: 10px;
       background-color: #a1887f;
       color: white;
-      padding: 10px 15px;
       border: none;
       border-radius: 5px;
       cursor: pointer;
-      margin-top: 15px;
+    }
+    .choices button:hover {
+      background-color: #8d6e63;
     }
     .result {
+      font-size: 20px;
       font-weight: bold;
       text-align: center;
       margin-top: 30px;
@@ -46,74 +50,73 @@
 </head>
 <body>
 
-  <h1>🌍 Quiz de Géographie</h1>
-  <form id="quizForm">
-    <!-- Questions will be injected here -->
-  </form>
-  <div class="result" id="result"></div>
-  <script>
-    const questions = [
-      {
-        question: "Quelle est la capitale du Canada ?",
-        choices: ["Toronto", "Vancouver", "Ottawa", "Montréal"],
-        answer: 2
-      },
-      {
-        question: "Quel est le plus long fleuve du monde ?",
-        choices: ["Amazon", "Nil", "Yangtsé", "Mississippi"],
-        answer: 1
-      },
-      {
-        question: "Quel pays a la plus grande population au monde ?",
-        choices: ["États-Unis", "Inde", "Chine", "Indonésie"],
-        answer: 2
-      },
-      {
-        question: "Dans quel pays se trouve le désert du Sahara ?",
-        choices: ["Égypte", "Arabie Saoudite", "Chili", "Australie"],
-        answer: 0
-      },
-      {
-        question: "Quel océan borde la côte ouest de la France ?",
-        choices: ["Atlantique", "Arctique", "Indien", "Pacifique"],
-        answer: 0
-      }
-    ];
+<h1>🌍 Quiz de Géographie</h1>
+<div class="question-box" id="quizContainer">
+  <!-- La question apparaîtra ici -->
+</div>
+<div class="result" id="result"></div>
 
-    const form = document.getElementById("quizForm");
+<script>
+  const questions = [
+    {
+      question: "Quelle est la capitale du Canada ?",
+      choices: ["Toronto", "Vancouver", "Ottawa", "Montréal"],
+      answer: 2
+    },
+    {
+      question: "Quel est le plus long fleuve du monde ?",
+      choices: ["Amazon", "Nil", "Yangtsé", "Mississippi"],
+      answer: 1
+    },
+    {
+      question: "Quel pays a la plus grande population ?",
+      choices: ["États-Unis", "Inde", "Chine", "Indonésie"],
+      answer: 2
+    },
+    {
+      question: "Dans quel pays se trouve le désert du Sahara ?",
+      choices: ["Égypte", "Arabie Saoudite", "Chili", "Australie"],
+      answer: 0
+    },
+    {
+      question: "Quel océan borde la côte ouest de la France ?",
+      choices: ["Atlantique", "Arctique", "Indien", "Pacifique"],
+      answer: 0
+    }
+  ];
 
-    questions.forEach((q, index) => {
-      const div = document.createElement("div");
-      div.className = "question";
-      div.innerHTML = `<p><strong>${index + 1}. ${q.question}</strong></p>`;
-      q.choices.forEach((choice, i) => {
-        div.innerHTML += `
-          <div class="choices">
-            <label>
-              <input type="radio" name="q${index}" value="${i}">
-              ${choice}
-            </label>
-          </div>`;
-      });
-      form.appendChild(div);
-    });
+  let currentQuestion = 0;
+  let score = 0;
 
-    const submitBtn = document.createElement("button");
-    submitBtn.textContent = "Valider mes réponses";
-    form.appendChild(submitBtn);
+  function showQuestion() {
+    const q = questions[currentQuestion];
+    const container = document.getElementById("quizContainer");
+    container.innerHTML = `
+      <p><strong>Question ${currentQuestion + 1} / ${questions.length}</strong></p>
+      <p>${q.question}</p>
+      <div class="choices">
+        ${q.choices.map((choice, i) =>
+          `<button onclick="handleAnswer(${i})">${choice}</button>`
+        ).join("")}
+      </div>
+    `;
+  }
 
-    submitBtn.addEventListener("click", function(event) {
-      event.preventDefault();
-      let score = 0;
-      questions.forEach((q, index) => {
-        const selected = document.querySelector(`input[name="q${index}"]:checked`);
-        if (selected && parseInt(selected.value) === q.answer) {
-          score++;
-        }
-      });
-      document.getElementById("result").textContent = `🎉 Vous avez obtenu ${score} / ${questions.length} bonnes réponses !`;
-    });
-  </script>
+  function handleAnswer(selectedIndex) {
+    if (selectedIndex === questions[currentQuestion].answer) {
+      score++;
+    }
+    currentQuestion++;
+    if (currentQuestion < questions.length) {
+      showQuestion();
+    } else {
+      document.getElementById("quizContainer").innerHTML = "";
+      document.getElementById("result").innerHTML = `🎉 Bravo ! Vous avez obtenu <strong>${score}</strong> / <strong>${questions.length}</strong>`;
+    }
+  }
+
+  showQuestion();
+</script>
 
 </body>
 </html>
