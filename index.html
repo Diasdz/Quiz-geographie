@@ -49,18 +49,21 @@
     }
 
     .choices {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
       margin-top: 20px;
     }
 
     .choices label {
-      display: block;
       background: #f5eee6;
-      padding: 12px 16px;
+      padding: 14px 16px;
       border-radius: 12px;
-      margin-bottom: 12px;
       box-shadow: 2px 2px 6px rgba(0,0,0,0.07);
       cursor: pointer;
       transition: all 0.25s ease;
+      display: flex;
+      align-items: center;
     }
 
     .choices label:hover {
@@ -104,6 +107,10 @@
     }
 
     @media (max-width: 600px) {
+      .choices {
+        grid-template-columns: 1fr;
+      }
+
       .quiz-card {
         padding: 20px;
       }
