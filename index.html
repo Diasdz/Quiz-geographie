@@ -1,51 +1,42 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quiz Géographie Dynamique</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Quiz de Géographie</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
       background-color: #f3ede4;
       color: #3e2f23;
-      max-width: 800px;
-      margin: auto;
+      margin: 0;
       padding: 20px;
+    }
+    .container {
+      max-width: 700px;
+      margin: auto;
     }
     h1 {
       text-align: center;
       color: #5d4037;
-      margin-bottom: 10px;
     }
     #score-display {
       text-align: center;
       font-size: 1.2em;
-      margin-bottom: 20px;
+      margin: 10px 0 20px;
       color: #795548;
     }
     .question-box {
       background-color: #fffaf4;
-      padding: 20px;
+      padding: 25px;
       border-radius: 12px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-      margin-bottom: 25px;
-    }
-    .question-image {
-      display: block;
-      max-width: 100%;
-      height: auto;
-      margin: 10px 0;
-      border-radius: 10px;
-    }
-    .choices {
-      margin-top: 15px;
     }
     .choices label {
       display: block;
       margin-bottom: 12px;
       cursor: pointer;
-      padding: 8px 12px;
+      padding: 10px;
       background-color: #f9f5f0;
       border-radius: 8px;
       transition: background 0.2s;
@@ -79,126 +70,141 @@
       text-align: center;
       font-size: 1.4em;
       font-weight: bold;
-      margin-top: 20px;
+      margin-top: 30px;
     }
     @media (max-width: 600px) {
-      body {
-        padding: 15px;
+      .question-box {
+        padding: 18px;
+      }
+      .btn {
+        width: 100%;
       }
     }
   </style>
 </head>
 <body>
+  <div class="container">
+    <h1>🌍 Quiz de Géographie</h1>
+    <div id="score-display">Score : 0</div>
+    <div class="question-box" id="quizContainer"></div>
+    <div class="result" id="result"></div>
+  </div>
 
-<h1>🌍 Quiz de Géographie</h1>
-<div id="score-display">Score : 0</div>
-<div class="question-box" id="quizContainer"></div>
-<div class="result" id="result"></div>
+  <script>
+    const questions = [
+      {
+        question: "Quelle est la capitale du Canada ?",
+        choices: ["Toronto", "Vancouver", "Ottawa", "Montréal"],
+        answer: 2
+      },
+      {
+        question: "Quel est le plus long fleuve du monde ?",
+        choices: ["Amazon", "Nil", "Yangtsé", "Mississippi"],
+        answer: 1
+      },
+      {
+        question: "Quel pays a la plus grande population ?",
+        choices: ["États-Unis", "Inde", "Chine", "Indonésie"],
+        answer: 2
+      },
+      {
+        question: "Dans quel pays se trouve le désert du Sahara ?",
+        choices: ["Égypte", "Arabie Saoudite", "Chili", "Australie"],
+        answer: 0
+      },
+      {
+        question: "Quel océan borde la côte ouest de la France ?",
+        choices: ["Atlantique", "Arctique", "Indien", "Pacifique"],
+        answer: 0
+      }
+    ];
 
-<script>
-  const questions = [
-    {
-      question: "Quelle est la capitale du Canada ?",
-      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Parliament_Ottawa.jpg/640px-Parliament_Ottawa.jpg",
-      choices: ["Toronto", "Vancouver", "Ottawa", "Montréal"],
-      answer: 2
-    },
-    {
-      question: "Quel est le plus long fleuve du monde ?",
-      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Nile_River_and_delta_from_orbit.jpg/640px-Nile_River_and_delta_from_orbit.jpg",
-      choices: ["Amazon", "Nil", "Yangtsé", "Mississippi"],
-      answer: 1
+    let currentQuestion = 0;
+    let score = 0;
+    let selected = null;
+
+    function updateScoreDisplay() {
+      document.getElementById("score-display").textContent = `Score : ${score}`;
     }
-  ];
 
-  let currentQuestion = 0;
-  let score = 0;
-  let selected = null;
+    function showQuestion() {
+      const q = questions[currentQuestion];
+      const container = document.getElementById("quizContainer");
+      container.innerHTML = `
+        <p><strong>Question ${currentQuestion + 1} / ${questions.length}</strong></p>
+        <p>${q.question}</p>
+        <div class="choices">
+          ${q.choices.map((choice, i) =>
+            `<label><input type="radio" name="choice" value="${i}"> ${choice}</label>`
+          ).join("")}
+        </div>
+        <div class="feedback" id="feedback"></div>
+        <button class="btn" id="nextBtn" onclick="nextQuestion()" disabled>Question suivante</button>
+      `;
 
-  function updateScoreDisplay() {
-    document.getElementById("score-display").textContent = `Score : ${score}`;
-  }
-
-  function showQuestion() {
-    const q = questions[currentQuestion];
-    const container = document.getElementById("quizContainer");
-    container.innerHTML = `
-      <p><strong>Question ${currentQuestion + 1} / ${questions.length}</strong></p>
-      <p>${q.question}</p>
-      ${q.image ? `<img src="${q.image}" alt="illustration" class="question-image">` : ""}
-      <div class="choices">
-        ${q.choices.map((choice, i) =>
-          `<label><input type="radio" name="choice" value="${i}"> ${choice}</label>`
-        ).join("")}
-      </div>
-      <div class="feedback" id="feedback"></div>
-      <button class="btn" id="nextBtn" onclick="nextQuestion()" disabled>Question suivante</button>
-    `;
-
-    selected = null;
-    document.querySelectorAll('input[name="choice"]').forEach(input => {
-      input.addEventListener('change', (e) => {
-        selected = parseInt(e.target.value);
-        validateAnswer();
+      selected = null;
+      document.querySelectorAll('input[name="choice"]').forEach(input => {
+        input.addEventListener('change', (e) => {
+          selected = parseInt(e.target.value);
+          validateAnswer();
+        });
       });
-    });
 
-    document.addEventListener("keydown", handleEnter);
-  }
-
-  function validateAnswer() {
-    const feedback = document.getElementById("feedback");
-    const correct = questions[currentQuestion].answer;
-
-    if (selected === correct) {
-      score++;
-      feedback.innerHTML = "✅ Bonne réponse !";
-    } else {
-      feedback.innerHTML = `❌ Mauvaise réponse. Réponse correcte : <strong>${questions[currentQuestion].choices[correct]}</strong>`;
+      document.addEventListener("keydown", handleEnter);
     }
 
-    updateScoreDisplay();
-    document.querySelectorAll('input[name="choice"]').forEach(input => input.disabled = true);
-    document.getElementById("nextBtn").disabled = false;
-  }
+    function validateAnswer() {
+      const feedback = document.getElementById("feedback");
+      const correct = questions[currentQuestion].answer;
 
-  function handleEnter(event) {
-    if (event.key === "Enter" && !document.getElementById("nextBtn").disabled) {
-      nextQuestion();
+      if (selected === correct) {
+        score++;
+        feedback.innerHTML = "✅ Bonne réponse !";
+      } else {
+        feedback.innerHTML = `❌ Mauvaise réponse. Réponse correcte : <strong>${questions[currentQuestion].choices[correct]}</strong>`;
+      }
+
+      updateScoreDisplay();
+      document.querySelectorAll('input[name="choice"]').forEach(input => input.disabled = true);
+      document.getElementById("nextBtn").disabled = false;
     }
-  }
 
-  function nextQuestion() {
-    document.removeEventListener("keydown", handleEnter);
-    currentQuestion++;
-    if (currentQuestion < questions.length) {
+    function handleEnter(event) {
+      if (event.key === "Enter" && !document.getElementById("nextBtn").disabled) {
+        nextQuestion();
+      }
+    }
+
+    function nextQuestion() {
+      document.removeEventListener("keydown", handleEnter);
+      currentQuestion++;
+      if (currentQuestion < questions.length) {
+        showQuestion();
+      } else {
+        showResult();
+      }
+    }
+
+    function showResult() {
+      document.getElementById("quizContainer").innerHTML = "";
+      document.getElementById("result").innerHTML = `
+        🎉 Quiz terminé !<br>
+        Votre score final est <strong>${score} / ${questions.length}</strong><br><br>
+        <button class="btn" onclick="restartQuiz()">Recommencer le quiz</button>
+      `;
+    }
+
+    function restartQuiz() {
+      currentQuestion = 0;
+      score = 0;
+      selected = null;
+      document.getElementById("result").innerHTML = "";
+      updateScoreDisplay();
       showQuestion();
-    } else {
-      showResult();
     }
-  }
 
-  function showResult() {
-    document.getElementById("quizContainer").innerHTML = "";
-    document.getElementById("result").innerHTML = `
-      🎉 Quiz terminé !<br>
-      Votre score final est <strong>${score} / ${questions.length}</strong><br><br>
-      <button class="btn" onclick="restartQuiz()">Recommencer le quiz</button>
-    `;
-  }
-
-  function restartQuiz() {
-    currentQuestion = 0;
-    score = 0;
-    selected = null;
-    document.getElementById("result").innerHTML = "";
     updateScoreDisplay();
     showQuestion();
-  }
-
-  updateScoreDisplay();
-  showQuestion();
-</script>
-
+  </script>
 </body>
 </html>
