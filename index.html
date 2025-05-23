@@ -105,3 +105,136 @@
 
     @media (max-width: 600px) {
       .quiz-card {
+        padding: 20px;
+      }
+
+      .btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>🌍 Quiz de Géographie</h1>
+  <div id="score-display">Score : 0</div>
+  <div class="quiz-card" id="quizContainer"></div>
+  <div class="result" id="result"></div>
+
+  <script>
+    const questions = [
+      {
+        question: "Quelle est la capitale du Canada ?",
+        choices: ["Toronto", "Vancouver", "Ottawa", "Montréal"],
+        answer: 2
+      },
+      {
+        question: "Quel est le plus long fleuve du monde ?",
+        choices: ["Amazon", "Nil", "Yangtsé", "Mississippi"],
+        answer: 1
+      },
+      {
+        question: "Quel pays a la plus grande population ?",
+        choices: ["États-Unis", "Inde", "Chine", "Indonésie"],
+        answer: 2
+      },
+      {
+        question: "Dans quel pays se trouve le désert du Sahara ?",
+        choices: ["Égypte", "Arabie Saoudite", "Chili", "Australie"],
+        answer: 0
+      },
+      {
+        question: "Quel océan borde la côte ouest de la France ?",
+        choices: ["Atlantique", "Arctique", "Indien", "Pacifique"],
+        answer: 0
+      }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+    let selected = null;
+
+    function updateScoreDisplay() {
+      document.getElementById("score-display").textContent = `Score : ${score}`;
+    }
+
+    function showQuestion() {
+      const q = questions[currentQuestion];
+      const container = document.getElementById("quizContainer");
+      container.innerHTML = `
+        <p><strong>Question ${currentQuestion + 1} / ${questions.length}</strong></p>
+        <p>${q.question}</p>
+        <div class="choices">
+          ${q.choices.map((choice, i) =>
+            `<label><input type="radio" name="choice" value="${i}"> ${choice}</label>`
+          ).join("")}
+        </div>
+        <div class="feedback" id="feedback"></div>
+        <button class="btn" id="nextBtn" onclick="nextQuestion()" disabled>Question suivante</button>
+      `;
+
+      selected = null;
+      document.querySelectorAll('input[name="choice"]').forEach(input => {
+        input.addEventListener('change', (e) => {
+          selected = parseInt(e.target.value);
+          validateAnswer();
+        });
+      });
+
+      document.addEventListener("keydown", handleEnter);
+    }
+
+    function validateAnswer() {
+      const feedback = document.getElementById("feedback");
+      const correct = questions[currentQuestion].answer;
+
+      if (selected === correct) {
+        score++;
+        feedback.innerHTML = "✅ Bonne réponse !";
+      } else {
+        feedback.innerHTML = `❌ Mauvaise réponse. Réponse correcte : <strong>${questions[currentQuestion].choices[correct]}</strong>`;
+      }
+
+      updateScoreDisplay();
+      document.querySelectorAll('input[name="choice"]').forEach(input => input.disabled = true);
+      document.getElementById("nextBtn").disabled = false;
+    }
+
+    function handleEnter(event) {
+      if (event.key === "Enter" && !document.getElementById("nextBtn").disabled) {
+        nextQuestion();
+      }
+    }
+
+    function nextQuestion() {
+      document.removeEventListener("keydown", handleEnter);
+      currentQuestion++;
+      if (currentQuestion < questions.length) {
+        showQuestion();
+      } else {
+        showResult();
+      }
+    }
+
+    function showResult() {
+      document.getElementById("quizContainer").innerHTML = "";
+      document.getElementById("result").innerHTML = `
+        🎉 Quiz terminé !<br>
+        Votre score final est <strong>${score} / ${questions.length}</strong><br><br>
+        <button class="btn" onclick="restartQuiz()">Recommencer le quiz</button>
+      `;
+    }
+
+    function restartQuiz() {
+      currentQuestion = 0;
+      score = 0;
+      selected = null;
+      document.getElementById("result").innerHTML = "";
+      updateScoreDisplay();
+      showQuestion();
+    }
+
+    updateScoreDisplay();
+    showQuestion();
+  </script>
+</body>
+</html>
