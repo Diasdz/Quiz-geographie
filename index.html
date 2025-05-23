@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Quiz Géographie</title>
-  <!-- Google Fonts -->
+  <title>Geography Quiz</title>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700&display=swap" rel="stylesheet" />
   <style>
     body {
@@ -125,38 +124,26 @@
   </style>
 </head>
 <body>
-  <h1>Quiz de Géographie</h1>
+  <h1>Geography Quiz</h1>
   <div class="quiz-card" id="quizContainer"></div>
   <div class="result" id="result"></div>
 
   <script>
-    const questions = [
-      {
-        question: "Quelle est la capitale du Canada ?",
-        choices: ["Toronto", "Vancouver", "Ottawa", "Montréal"],
-        answer: 2
-      },
-      {
-        question: "Quel est le plus long fleuve du monde ?",
-        choices: ["Amazon", "Nil", "Yangtsé", "Mississippi"],
-        answer: 1
-      },
-      {
-        question: "Quel pays a la plus grande population ?",
-        choices: ["États-Unis", "Inde", "Chine", "Indonésie"],
-        answer: 2
-      },
-      {
-        question: "Dans quel pays se trouve le désert du Sahara ?",
-        choices: ["Égypte", "Arabie Saoudite", "Chili", "Australie"],
-        answer: 0
-      },
-      {
-        question: "Quel océan borde la côte ouest de la France ?",
-        choices: ["Atlantique", "Arctique", "Indien", "Pacifique"],
-        answer: 0
-      }
-    ];
+    // Generate 100 sample questions programmatically
+    const questions = [];
+
+    for(let i=1; i<=100; i++) {
+      questions.push({
+        question: `What is the capital city of Country ${i}?`,
+        choices: [
+          `City A${i}`, 
+          `City B${i}`, 
+          `City C${i}`, 
+          `City D${i}`
+        ],
+        answer: i % 4 // rotate correct answer index from 0 to 3
+      });
+    }
 
     let currentQuestion = 0;
     let score = 0;
@@ -182,7 +169,7 @@
             ).join("")}
           </div>
           <div class="feedback" id="feedback"></div>
-          <button class="btn" id="nextBtn" onclick="nextQuestion()" disabled>Question suivante</button>
+          <button class="btn" id="nextBtn" onclick="nextQuestion()" disabled>Next Question</button>
         `;
 
         selected = null;
@@ -217,9 +204,9 @@
 
       if (selected === correct) {
         score++;
-        feedback.innerHTML = "✅ Bonne réponse !";
+        feedback.innerHTML = "✅ Correct answer!";
       } else {
-        feedback.innerHTML = `❌ Mauvaise réponse. La bonne réponse était <strong>${questions[currentQuestion].choices[correct]}</strong>`;
+        feedback.innerHTML = `❌ Wrong answer. The correct one was <strong>${questions[currentQuestion].choices[correct]}</strong>`;
       }
 
       document.getElementById("nextBtn").disabled = false;
@@ -247,9 +234,9 @@
     function showResult() {
       quizContainer.innerHTML = "";
       resultContainer.innerHTML = `
-        🎉 Quiz terminé !<br>
-        Votre score final est <strong>${score} / ${questions.length}</strong><br><br>
-        <button class="btn" onclick="restartQuiz()">Recommencer le quiz</button>
+        🎉 Quiz finished!<br>
+        Your final score is <strong>${score} / ${questions.length}</strong><br><br>
+        <button class="btn" onclick="restartQuiz()">Restart Quiz</button>
       `;
     }
 
