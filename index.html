@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Quiz Géographie 3D</title>
+  <title>Quiz Géographie</title>
   <style>
     body {
       margin: 0;
@@ -15,25 +15,11 @@
       align-items: center;
       padding: 20px;
     }
-
     h1 {
-      text-align: center;
       font-size: 2.2em;
       color: #5d4037;
-      margin-bottom: 10px;
       text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
     }
-
-    #score-display {
-      font-size: 1.2em;
-      margin-bottom: 30px;
-      background: #fef6e4;
-      padding: 10px 20px;
-      border-radius: 25px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      color: #6d4c41;
-    }
-
     .quiz-card {
       background: #fffaf4;
       border-radius: 20px;
@@ -41,20 +27,13 @@
       box-shadow: 0 8px 25px rgba(0,0,0,0.15);
       max-width: 600px;
       width: 100%;
-      transition: transform 0.2s ease;
     }
-
-    .quiz-card:hover {
-      transform: scale(1.01);
-    }
-
     .choices {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 16px;
       margin-top: 20px;
     }
-
     .choices label {
       background: #f5eee6;
       padding: 14px 16px;
@@ -65,33 +44,27 @@
       display: flex;
       align-items: center;
     }
-
     .choices label:hover {
       background: #ede0d4;
     }
-
     .choices input[type="radio"] {
       margin-right: 8px;
     }
-
     .correct {
       background-color: #c8e6c9 !important;
       border: 2px solid #388e3c;
       color: #2e7d32;
     }
-
     .incorrect {
       background-color: #ffcdd2 !important;
       border: 2px solid #c62828;
       color: #b71c1c;
     }
-
     .feedback {
       font-weight: bold;
       margin-top: 15px;
       text-align: center;
     }
-
     .btn {
       background-color: #a1887f;
       color: white;
@@ -105,28 +78,23 @@
       box-shadow: 0 6px 12px rgba(0,0,0,0.1);
       transition: background 0.3s ease, transform 0.1s ease;
     }
-
     .btn:hover {
       background-color: #8d6e63;
       transform: translateY(-2px);
     }
-
     .result {
       text-align: center;
       font-size: 1.4em;
       font-weight: bold;
       margin-top: 30px;
     }
-
     @media (max-width: 600px) {
       .choices {
         grid-template-columns: 1fr;
       }
-
       .quiz-card {
         padding: 20px;
       }
-
       .btn {
         width: 100%;
       }
@@ -134,8 +102,10 @@
   </style>
 </head>
 <body>
-  <h1>🌍 Quiz de Géographie</h1>
-  <div id="score-display">Score : 0</div>
+  <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Globe_icon.svg/64px-Globe_icon.svg.png" alt="Globe" width="48" height="48">
+    <h1 style="margin: 0;">🌍 Quiz de Géographie</h1>
+  </div>
   <div class="quiz-card" id="quizContainer"></div>
   <div class="result" id="result"></div>
 
@@ -172,15 +142,14 @@
     let score = 0;
     let selected = null;
 
-    function updateScoreDisplay() {
-      document.getElementById("score-display").textContent = `Score : ${score}`;
-    }
-
     function showQuestion() {
       const q = questions[currentQuestion];
       const container = document.getElementById("quizContainer");
       container.innerHTML = `
-        <p><strong>Question ${currentQuestion + 1} / ${questions.length}</strong></p>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+          <p><strong>Question ${currentQuestion + 1} / ${questions.length}</strong></p>
+          <p><strong>Score : ${score}</strong></p>
+        </div>
         <p>${q.question}</p>
         <div class="choices">
           ${q.choices.map((choice, i) =>
@@ -225,7 +194,6 @@
         feedback.innerHTML = `❌ Mauvaise réponse. La bonne réponse était <strong>${questions[currentQuestion].choices[correct]}</strong>`;
       }
 
-      updateScoreDisplay();
       document.getElementById("nextBtn").disabled = false;
     }
 
@@ -259,11 +227,9 @@
       score = 0;
       selected = null;
       document.getElementById("result").innerHTML = "";
-      updateScoreDisplay();
       showQuestion();
     }
 
-    updateScoreDisplay();
     showQuestion();
   </script>
 </body>
