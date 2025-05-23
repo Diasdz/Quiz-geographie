@@ -74,6 +74,18 @@
       margin-right: 8px;
     }
 
+    .correct {
+      background-color: #c8e6c9 !important;
+      border: 2px solid #388e3c;
+      color: #2e7d32;
+    }
+
+    .incorrect {
+      background-color: #ffcdd2 !important;
+      border: 2px solid #c62828;
+      color: #b71c1c;
+    }
+
     .feedback {
       font-weight: bold;
       margin-top: 15px;
@@ -191,18 +203,29 @@
     }
 
     function validateAnswer() {
-      const feedback = document.getElementById("feedback");
       const correct = questions[currentQuestion].answer;
+      const feedback = document.getElementById("feedback");
+
+      const labels = document.querySelectorAll(".choices label");
+      labels.forEach((label, index) => {
+        const input = label.querySelector("input");
+        input.disabled = true;
+
+        if (index === correct) {
+          label.classList.add("correct");
+        } else if (index === selected) {
+          label.classList.add("incorrect");
+        }
+      });
 
       if (selected === correct) {
         score++;
         feedback.innerHTML = "✅ Bonne réponse !";
       } else {
-        feedback.innerHTML = `❌ Mauvaise réponse. Réponse correcte : <strong>${questions[currentQuestion].choices[correct]}</strong>`;
+        feedback.innerHTML = `❌ Mauvaise réponse. La bonne réponse était <strong>${questions[currentQuestion].choices[correct]}</strong>`;
       }
 
       updateScoreDisplay();
-      document.querySelectorAll('input[name="choice"]').forEach(input => input.disabled = true);
       document.getElementById("nextBtn").disabled = false;
     }
 
