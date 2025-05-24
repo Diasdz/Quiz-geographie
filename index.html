@@ -16,17 +16,11 @@
       padding: 20px;
     }
     h1 {
-      font-size: 2.5em;
+      font-size: 2.4em;
       color: #5d4037;
-      font-weight: 900;
-      letter-spacing: 1.5px;
-      text-shadow: 2px 2px 5px rgba(93,64,55,0.4);
-      margin-bottom: 20px;
-      border-radius: 15px;
-      padding: 10px 25px;
-      background: #fffaf4cc;
-      box-shadow: 0 4px 15px rgba(93,64,55,0.3);
-      user-select: none;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+      border-radius: 20px;
+      padding: 10px 20px;
     }
     .quiz-card {
       background: #fffaf4;
@@ -48,17 +42,15 @@
       border-radius: 12px;
       box-shadow: 2px 2px 6px rgba(0,0,0,0.07);
       cursor: pointer;
-      transition: background 0.3s ease;
+      transition: all 0.25s ease;
       display: flex;
       align-items: center;
-      user-select: none;
     }
     .choices label:hover {
       background: #ede0d4;
     }
     .choices input[type="radio"] {
       margin-right: 8px;
-      cursor: pointer;
     }
     .correct {
       background-color: #c8e6c9 !important;
@@ -74,8 +66,6 @@
       font-weight: bold;
       margin-top: 15px;
       text-align: center;
-      min-height: 24px;
-      user-select: none;
     }
     .btn {
       background-color: #a1887f;
@@ -89,7 +79,6 @@
       font-size: 1em;
       box-shadow: 0 6px 12px rgba(0,0,0,0.1);
       transition: background 0.3s ease, transform 0.1s ease;
-      user-select: none;
     }
     .btn:hover {
       background-color: #8d6e63;
@@ -100,7 +89,6 @@
       font-size: 1.4em;
       font-weight: bold;
       margin-top: 30px;
-      user-select: none;
     }
     @media (max-width: 600px) {
       .choices {
@@ -121,13 +109,13 @@
   <div class="result" id="result"></div>
 
   <script>
-    const questions = [
+
+const questions = [
       { question: "What is the capital of Canada?", choices: ["Toronto", "Vancouver", "Ottawa", "Montreal"], answer: 2 },
       { question: "Which is the longest river in the world?", choices: ["Amazon", "Nile", "Yangtze", "Mississippi"], answer: 1 },
       { question: "Which country has the largest population?", choices: ["USA", "India", "China", "Indonesia"], answer: 2 },
       { question: "In which continent is the Sahara Desert?", choices: ["Egypt", "Saudi Arabia", "Chile", "Australia"], answer: 0 },
       { question: "Which ocean borders the west coast of France?", choices: ["Atlantic", "Arctic", "Indian", "Pacific"], answer: 0 },
-      // ... (add 95 more questions in similar format)
       { question: "Which country is famous for its geysers?", choices: ["Yosemite", "Yellowstone", "Grand Canyon", "Zion"], answer: 1 },
       { question: "Which country is home to the ancient city of Petra?", choices: ["Lebanon", "Jordan", "Syria", "Israel"], answer: 1 },
       { question: "Which country is the largest producer of diamonds?", choices: ["Russia", "Botswana", "South Africa", "Canada"], answer: 0 },
@@ -225,6 +213,8 @@
      { question: "Which country is known as the 'Land of Fire and Ice'?", choices: ["Iceland", "Greenland", "Norway", "Finland"], answer: 0 },
 
     ];
+    
+    
 
     let currentQuestion = 0;
     let score = 0;
@@ -236,7 +226,7 @@
       container.innerHTML = `
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
           <p><strong>Question ${currentQuestion + 1} / ${questions.length}</strong></p>
-          <p><strong>Score : ${score}</strong></p>
+          <p><strong>Score: ${score}</strong></p>
         </div>
         <p>${q.question}</p>
         <div class="choices">
@@ -279,7 +269,7 @@
         score++;
         feedback.innerHTML = "✅ Correct!";
       } else {
-        feedback.innerHTML = `❌ Incorrect. The correct answer was <strong>${questions[currentQuestion].choices[correct]}</strong>`;
+        feedback.innerHTML = `❌ Wrong. Correct answer: <strong>${questions[currentQuestion].choices[correct]}</strong>`;
       }
 
       document.getElementById("nextBtn").disabled = false;
@@ -302,13 +292,22 @@
     }
 
     function showResult() {
-      const container = document.getElementById("quizContainer");
-      container.innerHTML = "";
-      const result = document.getElementById("result");
-      result.innerHTML = `Quiz finished! Your final score is <strong>${score} / ${questions.length}</strong>.`;
+      document.getElementById("quizContainer").innerHTML = "";
+      document.getElementById("result").innerHTML = `
+        🎉 Quiz completed!<br>
+        Your final score is <strong>${score} / ${questions.length}</strong><br><br>
+        <button class="btn" onclick="restartQuiz()">Restart Quiz</button>
+      `;
     }
 
-    // Start quiz
+    function restartQuiz() {
+      currentQuestion = 0;
+      score = 0;
+      selected = null;
+      document.getElementById("result").innerHTML = "";
+      showQuestion();
+    }
+
     showQuestion();
   </script>
 </body>
