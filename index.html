@@ -106,20 +106,12 @@
 </head>
 <body>
 
-  <h1>🌍 Geography Quiz</h1>
+  <h1> Geography Quiz</h1>
 
   <div class="quiz-card" id="quizContainer"></div>
   <div class="result" id="result"></div>
 
   <script>
-    // Shuffle questions array
-    function shuffleArray(array) {
-      for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-      }
-    }
-
     const questions = [
       { question: "What is the capital of Canada?", choices: ["Toronto", "Vancouver", "Ottawa", "Montreal"], answer: 2 },
       { question: "Which is the longest river in the world?", choices: ["Amazon", "Nile", "Yangtze", "Mississippi"], answer: 1 },
@@ -131,15 +123,8 @@
       { question: "Which US state is the largest by area?", choices: ["Texas", "California", "Alaska", "Montana"], answer: 2 },
       { question: "Which continent has the most countries?", choices: ["Asia", "Africa", "Europe", "South America"], answer: 1 },
       { question: "Which desert is the hottest in the world?", choices: ["Sahara", "Kalahari", "Arabian", "Sonoran"], answer: 0 },
-      // ... continue tes questions jusqu'à 100
+      // ... ajoute ici tes 90 questions restantes pour faire 100 au total
     ];
-
-    // Pour l'exemple ici, on va dupliquer les questions pour faire 100 questions
-    while(questions.length < 100) {
-      questions.push(...questions.slice(0, 100 - questions.length));
-    }
-
-    shuffleArray(questions);
 
     let currentQuestion = 0;
     let score = 0;
@@ -190,7 +175,7 @@
         score++;
         feedback.innerHTML = "✅ Correct!";
       } else {
-        feedback.innerHTML = `❌ Wrong. Correct answer: <strong>${questions[currentQuestion].choices[correct]}</strong>`;
+        feedback.innerHTML = `❌ Wrong. Correct answer : <strong>${questions[currentQuestion].choices[correct]}</strong>`;
       }
 
       document.getElementById("nextBtn").disabled = false;
@@ -222,8 +207,8 @@
       document.getElementById("quizContainer").innerHTML = "";
       document.getElementById("result").innerHTML = `
         🎉 Quiz completed!<br>
-        Your final score is <strong>${score} / ${questions.length}</strong><br><br>
-        <p>Your best score is <strong>${bestScore} / ${questions.length}</strong></p>
+        Your final score is : <strong>${score} / ${questions.length}</strong><br><br>
+        <p>Your best score is : <strong>${bestScore} / ${questions.length}</strong></p>
         <button class="btn" onclick="restartQuiz()">Restart Quiz</button>
       `;
     }
@@ -232,7 +217,6 @@
       currentQuestion = 0;
       score = 0;
       selected = null;
-      shuffleArray(questions);
       document.getElementById("result").innerHTML = "";
       showQuestion();
     }
