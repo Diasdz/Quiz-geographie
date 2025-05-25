@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Geography Quiz</title>
+  <title>Quiz de Géographie</title>
   <style>
     :root {
       --primary-color: #3b3054;
@@ -280,6 +280,86 @@
       border-left: 5px solid #9b59b6;
     }
 
+    /* Styles pour les nouvelles fonctionnalités */
+    .social-share {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    .social-btn {
+      padding: 8px 15px;
+      border-radius: 5px;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: transform 0.2s;
+    }
+
+    .social-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .twitter { background-color: #1DA1F2; }
+    .facebook { background-color: #4267B2; }
+    .whatsapp { background-color: #25D366; }
+    .copy-link { background-color: #6c757d; }
+
+    .sound-toggle {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background: var(--secondary-color);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      z-index: 100;
+    }
+
+    .map-container {
+      width: 100%;
+      height: 200px;
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 15px 0;
+      border: 1px solid rgba(0,0,0,0.1);
+    }
+
+    .dark-mode .map-container {
+      border-color: rgba(255,255,255,0.1);
+    }
+
+    .learn-more-link {
+      display: inline-block;
+      margin-top: 10px;
+      color: var(--secondary-color);
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+
+    .learn-more-link:hover {
+      text-decoration: underline;
+    }
+
+    .flag-emoji {
+      font-size: 2em;
+      margin-right: 10px;
+      vertical-align: middle;
+    }
+
     @media (max-width: 600px) {
       .choices {
         grid-template-columns: 1fr;
@@ -298,130 +378,125 @@
         font-size: 1.8em;
         margin-top: 40px;
       }
+      .social-share {
+        flex-direction: column;
+        align-items: center;
+      }
+      .social-btn {
+        width: 100%;
+        justify-content: center;
+      }
     }
   </style>
 </head>
 <body>
   <div class="theme-toggle-container">
-    <span class="theme-toggle-label">Dark Mode</span>
+    <span class="theme-toggle-label">Mode Sombre</span>
     <button class="theme-toggle" id="themeToggle">🌙</button>
   </div>
+
+  <button class="sound-toggle" id="soundToggle">🔊</button>
   
-  <h1>Geography Quiz</h1>
+  <h1>Quiz de Géographie</h1>
 
   <div class="quiz-card" id="quizContainer"></div>
-  <div id="bestScoreDisplayBox">🏅 Best Score: <strong id="bestScoreDisplay"></strong></div>
+  <div id="bestScoreDisplayBox">🏅 Meilleur Score: <strong id="bestScoreDisplay"></strong></div>
   <div class="result" id="result"></div>
+
+  <!-- Sons intégrés -->
+  <audio id="correctSound" src="https://assets.mixkit.co/sfx/preview/mixkit-correct-answer-tone-2870.mp3" preload="auto"></audio>
+  <audio id="incorrectSound" src="https://assets.mixkit.co/sfx/preview/mixkit-wrong-answer-fail-notification-946.mp3" preload="auto"></audio>
 
   <script>
     const questions = [
-      { question: "Which country has the most active volcanoes?", choices: ["Indonesia", "Japan", "USA", "Chile"], answer: 0 },
-      { question: "What is the capital of Brazil?", choices: ["Rio de Janeiro", "Brasília", "São Paulo", "Salvador"], answer: 1 },
-      { question: "Which is the coldest inhabited place on Earth?", choices: ["Oymyakon, Russia", "Norilsk, Russia", "Barrow, USA", "Ulaanbaatar, Mongolia"], answer: 0 },
-      { question: "Which city is called the 'Big Apple'?", choices: ["Los Angeles", "Chicago", "New York", "Miami"], answer: 2 },
-      { question: "Which river flows through Paris?", choices: ["Seine", "Loire", "Rhône", "Garonne"], answer: 0 },
-      { question: "Which country invented pizza?", choices: ["Italy", "Greece", "France", "Spain"], answer: 0 },
-      { question: "Which is the largest desert in the world?", choices: ["Sahara", "Arabian", "Gobi", "Kalahari"], answer: 0 },
-      { question: "What is the capital of Japan?", choices: ["Kyoto", "Osaka", "Tokyo", "Hiroshima"], answer: 2 },
-      { question: "Which mountain is the highest in Africa?", choices: ["Mount Kenya", "Mount Kilimanjaro", "Mount Stanley", "Mount Meru"], answer: 1 },
-      { question: "Which country is known as the 'Land of the Rising Sun'?", choices: ["China", "Japan", "South Korea", "Thailand"], answer: 1 },
-      { question: "Which ocean is the smallest?", choices: ["Arctic", "Indian", "Southern", "Atlantic"], answer: 0 },
-      { question: "What is the capital of South Africa?", choices: ["Cape Town", "Pretoria", "Johannesburg", "Durban"], answer: 1 },
-      { question: "Which waterfall is the tallest in the world?", choices: ["Angel Falls", "Victoria Falls", "Niagara Falls", "Iguazu Falls"], answer: 0 },
-      { question: "Which country has the most UNESCO sites?", choices: ["Italy", "China", "Spain", "France"], answer: 1 },
-      { question: "Which European river is the longest?", choices: ["Danube", "Volga", "Rhine", "Seine"], answer: 1 },
-      { question: "Which city is the oldest continuously inhabited?", choices: ["Damascus", "Jericho", "Athens", "Varanasi"], answer: 0 },
-      { question: "Which desert is located in Chile?", choices: ["Atacama", "Patagonian", "Sonoran", "Mojave"], answer: 0 },
-      { question: "What is the capital of New Zealand?", choices: ["Auckland", "Wellington", "Christchurch", "Hamilton"], answer: 1 },
-      { question: "Which country has the most natural lakes?", choices: ["Canada", "Finland", "Russia", "USA"], answer: 0 },
-      { question: "Which nation drinks the most coffee?", choices: ["Finland", "Norway", "Brazil", "USA"], answer: 0 },
-      { question: "Which mountain range spans the USA and Canada?", choices: ["Rockies", "Andes", "Alps", "Himalayas"], answer: 0 },
-      { question: "Which country has no rivers?", choices: ["Saudi Arabia", "Maldives", "Kuwait", "Bahrain"], answer: 1 },
-      { question: "Which sea is the saltiest?", choices: ["Dead Sea", "Red Sea", "Mediterranean", "Caspian"], answer: 0 },
-      { question: "What is the capital of Turkey?", choices: ["Istanbul", "Ankara", "Izmir", "Antalya"], answer: 1 },
-      { question: "Which country contains the Amazon Rainforest?", choices: ["Brazil", "Peru", "Colombia", "All of the above"], answer: 3 },
-      { question: "Which city is the most populous?", choices: ["Tokyo", "Delhi", "Shanghai", "São Paulo"], answer: 0 },
-      { question: "Which island is the largest in the world?", choices: ["Greenland", "New Guinea", "Borneo", "Madagascar"], answer: 0 },
-      { question: "What is the capital of Malaysia?", choices: ["Kuala Lumpur", "Putrajaya", "Penang", "Johor Bahru"], answer: 0 },
-      { question: "Which country has the most glaciers?", choices: ["Canada", "Greenland", "Iceland", "Antarctica"], answer: 3 },
-      { question: "Which nation is the happiest?", choices: ["Finland", "Denmark", "Switzerland", "Iceland"], answer: 0 },
-      { question: "Which strait connects the Atlantic and Mediterranean?", choices: ["Gibraltar", "Bosporus", "Bering", "Malacca"], answer: 0 },
-      { question: "Which country invented the sauna?", choices: ["Sweden", "Finland", "Russia", "Norway"], answer: 1 },
-      { question: "Which lake is the deepest in Africa?", choices: ["Lake Tanganyika", "Lake Victoria", "Lake Malawi", "Lake Turkana"], answer: 0 },
-      { question: "Which country has the most castles?", choices: ["Germany", "France", "Spain", "Wales"], answer: 0 },
-      { question: "Which river is sacred in Hinduism?", choices: ["Ganges", "Brahmaputra", "Indus", "Yamuna"], answer: 0 },
-      { question: "Which is the hottest place on Earth?", choices: ["Death Valley, USA", "Dasht-e Lut, Iran", "Kebili, Tunisia", "Wadi Halfa, Sudan"], answer: 1 },
-      { question: "What is the capital of Kenya?", choices: ["Mombasa", "Nairobi", "Kisumu", "Nakuru"], answer: 1 },
-      { question: "Which country has the most coastline?", choices: ["Canada", "Norway", "Indonesia", "Australia"], answer: 0 },
-      { question: "Which nation has the most islands?", choices: ["Sweden", "Finland", "Norway", "Canada"], answer: 0 },
-      { question: "Which desert is in Mongolia?", choices: ["Gobi", "Taklamakan", "Karakum", "Kyzylkum"], answer: 0 },
-      { question: "Which city is the highest capital?", choices: ["La Paz, Bolivia", "Quito, Ecuador", "Lhasa, Tibet", "Bogotá, Colombia"], answer: 0 },
-      { question: "Which country is entirely in the Himalayas?", choices: ["Bhutan", "Nepal", "Tibet", "Pakistan"], answer: 0 },
-      { question: "Which volcano destroyed Pompeii?", choices: ["Vesuvius", "Etna", "Stromboli", "Krakatoa"], answer: 0 },
-      { question: "What is the capital of Vietnam?", choices: ["Ho Chi Minh City", "Hanoi", "Da Nang", "Hai Phong"], answer: 1 },
-      { question: "Which sea borders Greece and Turkey?", choices: ["Aegean", "Adriatic", "Ionian", "Mediterranean"], answer: 0 },
-      { question: "Which country has the most active geysers?", choices: ["USA", "Iceland", "Russia", "New Zealand"], answer: 1 },
-      { question: "Which African river is the longest?", choices: ["Nile", "Congo", "Niger", "Zambezi"], answer: 0 },
-      { question: "Which is the rainiest place on Earth?", choices: ["Mawsynram, India", "Cherrapunji, India", "Tutunendo, Colombia", "San Antonio de Ureca, Eq. Guinea"], answer: 0 },
-      { question: "What is the capital of Argentina?", choices: ["Buenos Aires", "Córdoba", "Rosario", "Mendoza"], answer: 0 },
-      { question: "Which canyon is the largest?", choices: ["Grand Canyon", "Fish River Canyon", "Colca Canyon", "Copper Canyon"], answer: 0 },
-      { question: "Which country is the flattest?", choices: ["Maldives", "Netherlands", "Qatar", "Denmark"], answer: 0 },
-      { question: "Which city is built on 118 islands?", choices: ["Venice", "Amsterdam", "Stockholm", "Copenhagen"], answer: 0 },
-      { question: "Which country has the most pyramids?", choices: ["Egypt", "Sudan", "Mexico", "Peru"], answer: 1 },
-      { question: "Which is the driest place on Earth?", choices: ["Atacama Desert", "McMurdo Dry Valleys", "Aswan, Egypt", "Alice Springs, Australia"], answer: 1 },
-      { question: "What is the capital of Finland?", choices: ["Helsinki", "Espoo", "Tampere", "Vantaa"], answer: 0 },
-      { question: "Which nation is the most biodiverse?", choices: ["Brazil", "Colombia", "Indonesia", "Ecuador"], answer: 1 },
-      { question: "Which river flows through Baghdad?", choices: ["Tigris", "Euphrates", "Nile", "Jordan"], answer: 0 },
-      { question: "Which country has the most public holidays?", choices: ["Cambodia", "Sri Lanka", "India", "Thailand"], answer: 0 },
-      { question: "Which mountain is in Tanzania?", choices: ["Kilimanjaro", "Everest", "K2", "Denali"], answer: 0 },
-      { question: "Which city is the most expensive?", choices: ["Singapore", "Zurich", "Hong Kong", "New York"], answer: 2 },
-      { question: "Which country is the smallest?", choices: ["Vatican", "Monaco", "Nauru", "San Marino"], answer: 0 },
-      { question: "Which African waterfall is the largest?", choices: ["Victoria Falls", "Tugela Falls", "Blue Nile Falls", "Kalambo Falls"], answer: 0 },
-      { question: "Which country has the most McDonald's?", choices: ["USA", "Japan", "China", "Canada"], answer: 0 },
-      { question: "Which island is the most remote?", choices: ["Tristan da Cunha", "Pitcairn", "Easter Island", "Bouvet Island"], answer: 0 },
-      { question: "What is the capital of Pakistan?", choices: ["Karachi", "Lahore", "Islamabad", "Rawalpindi"], answer: 2 },
-      { question: "Which nation is the most connected to the internet?", choices: ["Iceland", "Norway", "Denmark", "Sweden"], answer: 0 },
-      { question: "Which country is the newest?", choices: ["South Sudan", "Kosovo", "Montenegro", "Timor-Leste"], answer: 0 },
-      { question: "Which city has the most skyscrapers?", choices: ["Dubai", "New York", "Hong Kong", "Shanghai"], answer: 2 },
-      { question: "Which bridge is the longest?", choices: ["Danyang–Kunshan (China)", "Lake Pontchartrain (USA)", "Bang Na (Thailand)", "Jiaozhou Bay (China)"], answer: 0 },
-      { question: "What is the capital of Egypt?", choices: ["Alexandria", "Cairo", "Giza", "Luxor"], answer: 1 },
-      { question: "Which country has the most electric cars?", choices: ["Norway", "China", "USA", "Germany"], answer: 0 },
-      { question: "Which tunnel is the longest?", choices: ["Gotthard (Switzerland)", "Seikan (Japan)", "Channel Tunnel", "Laerdal (Norway)"], answer: 0 },
-      { question: "Which country has the most bicycles?", choices: ["Netherlands", "China", "Denmark", "Germany"], answer: 1 },
-      { question: "Which building is the tallest?", choices: ["Burj Khalifa", "Merdeka 118", "Shanghai Tower", "Abraj Al-Bait"], answer: 0 },
-      { question: "What is the capital of Colombia?", choices: ["Medellín", "Bogotá", "Cali", "Barranquilla"], answer: 1 },
-      { question: "Which nation is the most gender-equal?", choices: ["Iceland", "Finland", "Norway", "Sweden"], answer: 0 },
-      { question: "Which dam is the largest?", choices: ["Three Gorges (China)", "Itaipu (Brazil/Paraguay)", "Xiluodu (China)", "Grand Coulee (USA)"], answer: 0 },
-      { question: "Which country has the most borders?", choices: ["China", "Russia", "Brazil", "Germany"], answer: 1 },
-      { question: "What is the capital of Ukraine?", choices: ["Kyiv", "Kharkiv", "Odessa", "Lviv"], answer: 0 },
-      { question: "Which airport is the busiest?", choices: ["Atlanta, USA", "Dubai, UAE", "Beijing, China", "Los Angeles, USA"], answer: 0 },
-      { question: "Which country is the most visited?", choices: ["France", "Spain", "USA", "China"], answer: 0 },
-      { question: "What is the capital of Saudi Arabia?", choices: ["Mecca", "Riyadh", "Jeddah", "Medina"], answer: 1 },
-      { question: "Which language has the most words?", choices: ["English", "Arabic", "French", "Russian"], answer: 0 },
-      { question: "Which metro is the longest?", choices: ["Shanghai", "Beijing", "London", "New York"], answer: 0 },
-      { question: "What is the capital of Bangladesh?", choices: ["Chittagong", "Dhaka", "Khulna", "Rajshahi"], answer: 1 },
-      { question: "Which religion is the oldest?", choices: ["Hinduism", "Judaism", "Zoroastrianism", "Buddhism"], answer: 0 },
-      { question: "Which road is the longest?", choices: ["Pan-American Highway", "Trans-Siberian", "Australian Highway 1", "Trans-Canada"], answer: 0 },
-      { question: "What is the capital of Angola?", choices: ["Luanda", "Lubango", "Huambo", "Benguela"], answer: 0 },
-      { question: "Which company is the most valuable?", choices: ["Apple", "Saudi Aramco", "Microsoft", "Alphabet"], answer: 1 },
-      { question: "Which city is the most northern?", choices: ["Longyearbyen, Norway", "Utqiagvik, USA", "Murmansk, Russia", "Tromsø, Norway"], answer: 0 },
-      { question: "What is the capital of Cuba?", choices: ["Havana", "Santiago de Cuba", "Camagüey", "Holguín"], answer: 0 },
-      { question: "Which animal is the fastest?", choices: ["Cheetah", "Peregrine Falcon", "Sailfish", "Spine-Tailed Swift"], answer: 1 },
-      { question: "What is the capital of Portugal?", choices: ["Lisbon", "Porto", "Braga", "Faro"], answer: 0 },
-      { question: "Which plant is the tallest?", choices: ["Redwood", "Eucalyptus", "Douglas Fir", "Sitka Spruce"], answer: 0 },
-      { question: "What is the capital of Greece?", choices: ["Athens", "Thessaloniki", "Patras", "Heraklion"], answer: 0 },
-      { question: "Which is the windiest place on Earth?", choices: ["Wellington, NZ", "Chicago, USA", "Mount Washington, USA", "Patagonia, Argentina"], answer: 2 },
-      { question: "Which country changed its capital in 2022?", choices: ["Indonesia", "Egypt", "Malaysia", "Myanmar"], answer: 0 },
-      { question: "Where is the point farthest from any ocean located?", choices: ["Kazakhstan", "China", "Brazil", "Australia"], answer: 1 },
-      { question: "Which city is traversed by the Amazon River?", choices: ["Manaus", "Iquitos", "Belém", "Leticia"], answer: 0 },
-      { question: "Which country produces the most chocolate?", choices: ["Switzerland", "Belgium", "Ivory Coast", "Germany"], answer: 2 }
+      { 
+        question: "Quelle est la capitale de la France?", 
+        choices: ["Berlin", "Madrid", "Paris", "Rome"], 
+        answer: 2,
+        flag: "🇫🇷",
+        map: "https://maps.google.com/maps?q=Paris&output=embed",
+        learnMore: "https://fr.wikipedia.org/wiki/Paris"
+      },
+      { 
+        question: "Quel pays a le plus de volcans actifs?", 
+        choices: ["Indonésie", "Japon", "États-Unis", "Chili"], 
+        answer: 0,
+        flag: "🇮🇩",
+        map: "https://maps.google.com/maps?q=Indonésie&output=embed",
+        learnMore: "https://fr.wikipedia.org/wiki/Volcan#Répartition_géographique"
+      },
+      { 
+        question: "Quelle est la capitale du Brésil?", 
+        choices: ["Rio de Janeiro", "Brasília", "São Paulo", "Salvador"], 
+        answer: 1,
+        flag: "🇧🇷",
+        map: "https://maps.google.com/maps?q=Brasília&output=embed",
+        learnMore: "https://fr.wikipedia.org/wiki/Brasilia"
+      },
+      { 
+        question: "Quelle ville est surnommée la 'Grosse Pomme'?", 
+        choices: ["Los Angeles", "Chicago", "New York", "Miami"], 
+        answer: 2,
+        flag: "🇺🇸",
+        map: "https://maps.google.com/maps?q=New+York&output=embed",
+        learnMore: "https://fr.wikipedia.org/wiki/Big_Apple"
+      },
+      { 
+        question: "Quel fleuve traverse Paris?", 
+        choices: ["Seine", "Loire", "Rhône", "Garonne"], 
+        answer: 0,
+        flag: "🇫🇷",
+        map: "https://maps.google.com/maps?q=Seine+Paris&output=embed",
+        learnMore: "https://fr.wikipedia.org/wiki/Seine"
+      },
+      { 
+        question: "Quel pays a inventé la pizza?", 
+        choices: ["Italie", "Grèce", "France", "Espagne"], 
+        answer: 0,
+        flag: "🇮🇹",
+        map: "https://maps.google.com/maps?q=Naples+Italie&output=embed",
+        learnMore: "https://fr.wikipedia.org/wiki/Pizza"
+      },
+      { 
+        question: "Quel est le plus grand désert du monde?", 
+        choices: ["Sahara", "Arabique", "Gobi", "Kalahari"], 
+        answer: 0,
+        flag: "🌍",
+        map: "https://maps.google.com/maps?q=Sahara&output=embed",
+        learnMore: "https://fr.wikipedia.org/wiki/Désert_du_Sahara"
+      },
+      { 
+        question: "Quelle est la capitale du Japon?", 
+        choices: ["Kyoto", "Osaka", "Tokyo", "Hiroshima"], 
+        answer: 2,
+        flag: "🇯🇵",
+        map: "https://maps.google.com/maps?q=Tokyo&output=embed",
+        learnMore: "https://fr.wikipedia.org/wiki/Tokyo"
+      },
+      { 
+        question: "Quelle montagne est la plus haute d'Afrique?", 
+        choices: ["Mont Kenya", "Kilimandjaro", "Mont Stanley", "Mont Meru"], 
+        answer: 1,
+        flag: "🇹🇿",
+        map: "https://maps.google.com/maps?q=Kilimandjaro&output=embed",
+        learnMore: "https://fr.wikipedia.org/wiki/Mont_Kilimandjaro"
+      },
+      { 
+        question: "Quel pays est connu comme le 'Pays du Soleil Levant'?", 
+        choices: ["Chine", "Japon", "Corée du Sud", "Thaïlande"], 
+        answer: 1,
+        flag: "🇯🇵",
+        map: "https://maps.google.com/maps?q=Japon&output=embed",
+        learnMore: "https://fr.wikipedia.org/wiki/Japon"
+      }
     ];
 
     let currentQuestion = 0;
     let score = 0;
     let selected = null;
+    let soundEnabled = true;
 
-    // Shuffle questions at start
+    // Mélanger les questions au démarrage
     questions.sort(() => Math.random() - 0.5);
 
     function showQuestion() {
@@ -435,14 +510,21 @@
         <div class="progress-container">
           <div class="progress-bar" id="progressBar"></div>
         </div>
-        <p>${q.question}</p>
+        <div style="display:flex; align-items:center; margin-bottom:15px;">
+          ${q.flag ? `<span class="flag-emoji">${q.flag}</span>` : ''}
+          <p>${q.question}</p>
+        </div>
+        ${q.map ? `
+        <div class="map-container">
+          <iframe src="${q.map}" width="100%" height="100%" style="border:none;" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>` : ''}
         <div class="choices">
           ${q.choices.map((choice, i) =>
             `<label><input type="radio" name="choice" value="${i}"> ${choice}</label>`
           ).join("")}
         </div>
         <div class="feedback" id="feedback"></div>
-        <button class="btn" id="nextBtn" onclick="nextQuestion()" disabled>Next Question</button>
+        <button class="btn" id="nextBtn" onclick="nextQuestion()" disabled>Question Suivante</button>
       `;
 
       updateProgress();
@@ -481,8 +563,21 @@
       if (selected === correct) {
         score++;
         feedback.innerHTML = "✅ Correct!";
+        if (soundEnabled) document.getElementById("correctSound").play();
       } else {
-        feedback.innerHTML = `❌ Incorrect. The correct answer is <strong>${questions[currentQuestion].choices[correct]}</strong>`;
+        feedback.innerHTML = `❌ Incorrect. La bonne réponse est <strong>${questions[currentQuestion].choices[correct]}</strong>`;
+        if (soundEnabled) document.getElementById("incorrectSound").play();
+      }
+
+      // Ajouter le lien "En savoir plus"
+      if (questions[currentQuestion].learnMore) {
+        feedback.innerHTML += `
+          <div>
+            <a href="${questions[currentQuestion].learnMore}" target="_blank" class="learn-more-link">
+              📚 En savoir plus
+            </a>
+          </div>
+        `;
       }
 
       document.getElementById("nextBtn").disabled = false;
@@ -521,11 +616,14 @@
       const percentage = (score / questions.length) * 100;
       const levelInfo = getLevelInfo(percentage);
       
+      const shareText = `J'ai obtenu ${score}/${questions.length} au quiz de géographie! ${percentage >= 50 ? '🥳' : '😅'} #GéographieQuiz`;
+      const shareUrl = encodeURIComponent(window.location.href);
+      
       document.getElementById("quizContainer").innerHTML = "";
       document.getElementById("result").innerHTML = `
-        🎉 Quiz completed!<br>
-        Your final score: <strong>${score} / ${questions.length}</strong><br>
-        🏆 Best score: <strong>${best} / ${questions.length}</strong>
+        🎉 Quiz terminé !<br>
+        Votre score final : <strong>${score} / ${questions.length}</strong><br>
+        🏆 Meilleur score : <strong>${best} / ${questions.length}</strong>
         
         <div class="level-container ${levelInfo.class}">
           <div class="level-icon">${levelInfo.icon}</div>
@@ -533,8 +631,33 @@
           <p class="level-description">${levelInfo.description}</p>
         </div>
         
-        <button class="btn" onclick="restartQuiz()">Restart Quiz</button>
+        <div class="social-share">
+          <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${shareUrl}" 
+             class="social-btn twitter" target="_blank">
+            🐦 Twitter
+          </a>
+          <a href="https://www.facebook.com/sharer/sharer.php?u=${shareUrl}" 
+             class="social-btn facebook" target="_blank">
+            👍 Facebook
+          </a>
+          <a href="https://wa.me/?text=${encodeURIComponent(shareText + ' ' + window.location.href)}" 
+             class="social-btn whatsapp" target="_blank">
+            📱 WhatsApp
+          </a>
+          <button class="social-btn copy-link" onclick="copyToClipboard()">
+            📋 Copier le lien
+          </button>
+        </div>
+        
+        <button class="btn" onclick="restartQuiz()">Recommencer le Quiz</button>
       `;
+    }
+
+    function copyToClipboard() {
+      const shareText = `J'ai obtenu ${score}/${questions.length} au quiz de géographie! ${(score/questions.length*100) >= 50 ? '🥳' : '😅'} #GéographieQuiz ${window.location.href}`;
+      navigator.clipboard.writeText(shareText).then(() => {
+        alert("Lien copié dans le presse-papiers !");
+      });
     }
 
     function getLevelInfo(percentage) {
@@ -542,49 +665,49 @@
         return {
           class: "level-master",
           icon: "🧙‍♂️",
-          title: "Geography Master",
-          description: "Impressive! Your knowledge of the world is worthy of a living atlas. You could rival a GPS!"
+          title: "Maître en Géographie",
+          description: "Impressionnant ! Votre connaissance du monde est digne d'un atlas vivant. Vous pourriez rivaliser avec un GPS !"
         };
       } else if (percentage >= 80) {
         return {
           class: "level-expert",
           icon: "🌟",
-          title: "Geography Expert",
-          description: "Excellent! You have an in-depth knowledge of our planet. Maps hold almost no secrets for you."
+          title: "Expert en Géographie",
+          description: "Excellent ! Vous avez une connaissance approfondie de notre planète. Les cartes n'ont presque plus de secrets pour vous."
         };
       } else if (percentage >= 65) {
         return {
           class: "level-advanced",
           icon: "🗺️",
-          title: "Advanced",
-          description: "Great score! You have a solid understanding of world geography. Keep exploring!"
+          title: "Avancé",
+          description: "Super score ! Vous avez une solide compréhension de la géographie mondiale. Continuez à explorer !"
         };
       } else if (percentage >= 50) {
         return {
           class: "level-intermediate",
           icon: "🌍",
-          title: "Intermediate",
-          description: "Good work! You have solid basics but there are still some territories to explore in your knowledge."
+          title: "Intermédiaire",
+          description: "Bon travail ! Vous avez des bases solides mais il reste encore quelques territoires à explorer dans vos connaissances."
         };
       } else if (percentage >= 30) {
         return {
           class: "level-beginner",
           icon: "🧭",
-          title: "Beginner",
-          description: "Not bad! You're beginning your journey around the world. A little more study and you'll progress quickly."
+          title: "Débutant",
+          description: "Pas mal ! Vous commencez votre voyage autour du monde. Un peu plus d'étude et vous progresserez rapidement."
         };
       } else {
         return {
           class: "level-novice",
           icon: "🌱",
           title: "Novice",
-          description: "The world is vast and mysterious! It's the perfect time to open an atlas and discover new horizons."
+          description: "Le monde est vaste et mystérieux ! C'est le moment idéal pour ouvrir un atlas et découvrir de nouveaux horizons."
         };
       }
     }
 
     function restartQuiz() {
-      // Re-shuffle questions for a new game
+      // Re-mélanger les questions pour une nouvelle partie
       questions.sort(() => Math.random() - 0.5);
       currentQuestion = 0;
       score = 0;
@@ -594,7 +717,7 @@
       document.getElementById("bestScoreDisplay").textContent = `${getBestScore()} / ${questions.length}`;
     }
 
-    // Dark mode management
+    // Gestion du mode sombre
     function toggleDarkMode() {
       document.body.classList.toggle("dark-mode");
       localStorage.setItem("darkMode", document.body.classList.contains("dark-mode"));
@@ -606,16 +729,36 @@
       document.getElementById("themeToggle").textContent = isDark ? "☀️" : "🌙";
     }
 
-    // Disable dark mode by default
-    document.body.classList.remove("dark-mode");
-    localStorage.setItem("darkMode", "false");
-    updateThemeIcon();
+    // Gestion du son
+    function toggleSound() {
+      soundEnabled = !soundEnabled;
+      document.getElementById("soundToggle").textContent = soundEnabled ? "🔊" : "🔇";
+      localStorage.setItem("soundEnabled", soundEnabled);
+    }
 
-    document.getElementById("themeToggle").addEventListener("click", toggleDarkMode);
+    // Initialisation
+    function init() {
+      // Mode sombre
+      if (localStorage.getItem("darkMode") === "true") {
+        document.body.classList.add("dark-mode");
+      }
+      updateThemeIcon();
+      document.getElementById("themeToggle").addEventListener("click", toggleDarkMode);
 
-    // Start the quiz
-    showQuestion();
-    document.getElementById("bestScoreDisplay").textContent = `${getBestScore()} / ${questions.length}`;
+      // Son
+      if (localStorage.getItem("soundEnabled") !== null) {
+        soundEnabled = localStorage.getItem("soundEnabled") === "true";
+      }
+      document.getElementById("soundToggle").textContent = soundEnabled ? "🔊" : "🔇";
+      document.getElementById("soundToggle").addEventListener("click", toggleSound);
+
+      // Démarrer le quiz
+      showQuestion();
+      document.getElementById("bestScoreDisplay").textContent = `${getBestScore()} / ${questions.length}`;
+    }
+
+    // Démarrer l'application
+    init();
   </script>
 </body>
 </html>
