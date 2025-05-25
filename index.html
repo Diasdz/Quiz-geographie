@@ -134,113 +134,102 @@
   
       const questions = [
 
-  // Capitales (20 questions)
-  { question: "What is the capital of Japan?", choices: ["Kyoto", "Osaka", "Tokyo", "Hiroshima"], answer: 2 },
+  { question: "Which country has the most active volcanoes?", choices: ["Indonesia", "Japan", "USA", "Chile"], answer: 0 },
   { question: "What is the capital of Brazil?", choices: ["Rio de Janeiro", "Brasília", "São Paulo", "Salvador"], answer: 1 },
-  { question: "What is the capital of South Africa?", choices: ["Cape Town", "Pretoria", "Johannesburg", "Durban"], answer: 1 }, // 3 capitales (Pretoria exécutive)
-  { question: "What is the capital of New Zealand?", choices: ["Auckland", "Wellington", "Christchurch", "Hamilton"], answer: 1 },
-  { question: "What is the capital of Turkey?", choices: ["Istanbul", "Ankara", "Izmir", "Antalya"], answer: 1 },
-  { question: "What is the capital of Malaysia?", choices: ["Kuala Lumpur", "Putrajaya", "Penang", "Johor Bahru"], answer: 0 }, // Officielle : Kuala Lumpur
-  { question: "What is the capital of Kenya?", choices: ["Mombasa", "Nairobi", "Kisumu", "Nakuru"], answer: 1 },
-  { question: "What is the capital of Vietnam?", choices: ["Ho Chi Minh City", "Hanoi", "Da Nang", "Hai Phong"], answer: 1 },
-  { question: "What is the capital of Argentina?", choices: ["Buenos Aires", "Córdoba", "Rosario", "Mendoza"], answer: 0 },
-  { question: "What is the capital of Finland?", choices: ["Helsinki", "Espoo", "Tampere", "Vantaa"], answer: 0 },
-  { question: "What is the capital of Pakistan?", choices: ["Karachi", "Lahore", "Islamabad", "Rawalpindi"], answer: 2 },
-  { question: "What is the capital of Egypt?", choices: ["Alexandria", "Cairo", "Giza", "Luxor"], answer: 1 },
-  { question: "What is the capital of Colombia?", choices: ["Medellín", "Bogotá", "Cali", "Barranquilla"], answer: 1 },
-  { question: "What is the capital of Ukraine?", choices: ["Kyiv", "Kharkiv", "Odessa", "Lviv"], answer: 0 },
-  { question: "What is the capital of Saudi Arabia?", choices: ["Mecca", "Riyadh", "Jeddah", "Medina"], answer: 1 },
-  { question: "What is the capital of Bangladesh?", choices: ["Chittagong", "Dhaka", "Khulna", "Rajshahi"], answer: 1 },
-  { question: "What is the capital of Angola?", choices: ["Luanda", "Lubango", "Huambo", "Benguela"], answer: 0 },
-  { question: "What is the capital of Cuba?", choices: ["Havana", "Santiago de Cuba", "Camagüey", "Holguín"], answer: 0 },
-  { question: "What is the capital of Portugal?", choices: ["Lisbon", "Porto", "Braga", "Faro"], answer: 0 },
-  { question: "What is the capital of Greece?", choices: ["Athens", "Thessaloniki", "Patras", "Heraklion"], answer: 0 },
-
-  // Reliefs & Nature (30 questions)
-  { question: "Which is the largest desert in the world?", choices: ["Sahara", "Arabian", "Gobi", "Kalahari"], answer: 0 },
-  { question: "Which mountain is the highest in Africa?", choices: ["Mount Kenya", "Mount Kilimanjaro", "Mount Stanley", "Mount Meru"], answer: 1 },
+  { question: "Which is the coldest inhabited place on Earth?", choices: ["Oymyakon, Russia", "Norilsk, Russia", "Barrow, USA", "Ulaanbaatar, Mongolia"], answer: 0 },
+  { question: "Which city is called the 'Big Apple'?", choices: ["Los Angeles", "Chicago", "New York", "Miami"], answer: 2 },
   { question: "Which river flows through Paris?", choices: ["Seine", "Loire", "Rhône", "Garonne"], answer: 0 },
-  { question: "Which waterfall is the tallest in the world?", choices: ["Angel Falls", "Victoria Falls", "Niagara Falls", "Iguazu Falls"], answer: 0 },
-  { question: "Which country has the most volcanoes?", choices: ["Indonesia", "Japan", "USA", "Chile"], answer: 0 },
+  { question: "Which country invented pizza?", choices: ["Italy", "Greece", "France", "Spain"], answer: 0 },
+  { question: "Which is the largest desert in the world?", choices: ["Sahara", "Arabian", "Gobi", "Kalahari"], answer: 0 },
+  { question: "What is the capital of Japan?", choices: ["Kyoto", "Osaka", "Tokyo", "Hiroshima"], answer: 2 },
+  { question: "Which mountain is the highest in Africa?", choices: ["Mount Kenya", "Mount Kilimanjaro", "Mount Stanley", "Mount Meru"], answer: 1 },
+  { question: "Which country is known as the 'Land of the Rising Sun'?", choices: ["China", "Japan", "South Korea", "Thailand"], answer: 1 },
   { question: "Which ocean is the smallest?", choices: ["Arctic", "Indian", "Southern", "Atlantic"], answer: 0 },
-  { question: "Which lake is the deepest in Africa?", choices: ["Lake Tanganyika", "Lake Victoria", "Lake Malawi", "Lake Turkana"], answer: 0 },
-  { question: "Which country contains the Amazon Rainforest?", choices: ["Brazil", "Peru", "Colombia", "All of the above"], answer: 3 },
+  { question: "What is the capital of South Africa?", choices: ["Cape Town", "Pretoria", "Johannesburg", "Durban"], answer: 1 },
+  { question: "Which waterfall is the tallest in the world?", choices: ["Angel Falls", "Victoria Falls", "Niagara Falls", "Iguazu Falls"], answer: 0 },
+  { question: "Which country has the most UNESCO sites?", choices: ["Italy", "China", "Spain", "France"], answer: 1 },
   { question: "Which European river is the longest?", choices: ["Danube", "Volga", "Rhine", "Seine"], answer: 1 },
+  { question: "Which city is the oldest continuously inhabited?", choices: ["Damascus", "Jericho", "Athens", "Varanasi"], answer: 0 },
   { question: "Which desert is located in Chile?", choices: ["Atacama", "Patagonian", "Sonoran", "Mojave"], answer: 0 },
-  { question: "Which country has the most glaciers?", choices: ["Canada", "Greenland", "Iceland", "Antarctica"], answer: 3 }, // Techniquement l'Antarctique
-  { question: "Which island is the largest in the world?", choices: ["Greenland", "New Guinea", "Borneo", "Madagascar"], answer: 0 },
-  { question: "Which strait connects the Atlantic and Mediterranean?", choices: ["Gibraltar", "Bosporus", "Bering", "Malacca"], answer: 0 },
+  { question: "What is the capital of New Zealand?", choices: ["Auckland", "Wellington", "Christchurch", "Hamilton"], answer: 1 },
   { question: "Which country has the most natural lakes?", choices: ["Canada", "Finland", "Russia", "USA"], answer: 0 },
+  { question: "Which nation drinks the most coffee?", choices: ["Finland", "Norway", "Brazil", "USA"], answer: 0 },
   { question: "Which mountain range spans the USA and Canada?", choices: ["Rockies", "Andes", "Alps", "Himalayas"], answer: 0 },
+  { question: "Which country has no rivers?", choices: ["Saudi Arabia", "Maldives", "Kuwait", "Bahrain"], answer: 1 },
   { question: "Which sea is the saltiest?", choices: ["Dead Sea", "Red Sea", "Mediterranean", "Caspian"], answer: 0 },
-  { question: "Which country is home to the Great Barrier Reef?", choices: ["Australia", "Fiji", "Philippines", "Indonesia"], answer: 0 },
+  { question: "What is the capital of Turkey?", choices: ["Istanbul", "Ankara", "Izmir", "Antalya"], answer: 1 },
+  { question: "Which country contains the Amazon Rainforest?", choices: ["Brazil", "Peru", "Colombia", "All of the above"], answer: 3 },
+  { question: "Which city is the most populous?", choices: ["Tokyo", "Delhi", "Shanghai", "São Paulo"], answer: 0 },
+  { question: "Which island is the largest in the world?", choices: ["Greenland", "New Guinea", "Borneo", "Madagascar"], answer: 0 },
+  { question: "What is the capital of Malaysia?", choices: ["Kuala Lumpur", "Putrajaya", "Penang", "Johor Bahru"], answer: 0 },
+  { question: "Which country has the most glaciers?", choices: ["Canada", "Greenland", "Iceland", "Antarctica"], answer: 3 },
+  { question: "Which nation is the happiest?", choices: ["Finland", "Denmark", "Switzerland", "Iceland"], answer: 0 },
+  { question: "Which strait connects the Atlantic and Mediterranean?", choices: ["Gibraltar", "Bosporus", "Bering", "Malacca"], answer: 0 },
+  { question: "Which country invented the sauna?", choices: ["Sweden", "Finland", "Russia", "Norway"], answer: 1 },
+  { question: "Which lake is the deepest in Africa?", choices: ["Lake Tanganyika", "Lake Victoria", "Lake Malawi", "Lake Turkana"], answer: 0 },
+  { question: "Which country has the most castles?", choices: ["Germany", "France", "Spain", "Wales"], answer: 0 },
   { question: "Which river is sacred in Hinduism?", choices: ["Ganges", "Brahmaputra", "Indus", "Yamuna"], answer: 0 },
-  { question: "Which African waterfall is the largest?", choices: ["Victoria Falls", "Tugela Falls", "Blue Nile Falls", "Kalambo Falls"], answer: 0 },
+  { question: "Which is the hottest place on Earth?", choices: ["Death Valley, USA", "Dasht-e Lut, Iran", "Kebili, Tunisia", "Wadi Halfa, Sudan"], answer: 1 },
+  { question: "What is the capital of Kenya?", choices: ["Mombasa", "Nairobi", "Kisumu", "Nakuru"], answer: 1 },
   { question: "Which country has the most coastline?", choices: ["Canada", "Norway", "Indonesia", "Australia"], answer: 0 },
+  { question: "Which nation has the most islands?", choices: ["Sweden", "Finland", "Norway", "Canada"], answer: 0 },
   { question: "Which desert is in Mongolia?", choices: ["Gobi", "Taklamakan", "Karakum", "Kyzylkum"], answer: 0 },
-  { question: "Which volcano destroyed Pompeii?", choices: ["Vesuvius", "Etna", "Stromboli", "Krakatoa"], answer: 0 },
-  { question: "Which country has the most islands?", choices: ["Sweden", "Finland", "Norway", "Canada"], answer: 0 }, // Suède (220 000+)
-  { question: "Which river flows through Baghdad?", choices: ["Tigris", "Euphrates", "Nile", "Jordan"], answer: 0 },
-  { question: "Which mountain is in Tanzania?", choices: ["Kilimanjaro", "Everest", "K2", "Denali"], answer: 0 },
+  { question: "Which city is the highest capital?", choices: ["La Paz, Bolivia", "Quito, Ecuador", "Lhasa, Tibet", "Bogotá, Colombia"], answer: 0 },
   { question: "Which country is entirely in the Himalayas?", choices: ["Bhutan", "Nepal", "Tibet", "Pakistan"], answer: 0 },
+  { question: "Which volcano destroyed Pompeii?", choices: ["Vesuvius", "Etna", "Stromboli", "Krakatoa"], answer: 0 },
+  { question: "What is the capital of Vietnam?", choices: ["Ho Chi Minh City", "Hanoi", "Da Nang", "Hai Phong"], answer: 1 },
   { question: "Which sea borders Greece and Turkey?", choices: ["Aegean", "Adriatic", "Ionian", "Mediterranean"], answer: 0 },
   { question: "Which country has the most active geysers?", choices: ["USA", "Iceland", "Russia", "New Zealand"], answer: 1 },
   { question: "Which African river is the longest?", choices: ["Nile", "Congo", "Niger", "Zambezi"], answer: 0 },
+  { question: "Which is the rainiest place on Earth?", choices: ["Mawsynram, India", "Cherrapunji, India", "Tutunendo, Colombia", "San Antonio de Ureca, Eq. Guinea"], answer: 0 },
+  { question: "What is the capital of Argentina?", choices: ["Buenos Aires", "Córdoba", "Rosario", "Mendoza"], answer: 0 },
   { question: "Which canyon is the largest?", choices: ["Grand Canyon", "Fish River Canyon", "Colca Canyon", "Copper Canyon"], answer: 0 },
-
-  // Culture & Insolite (25 questions)
-  { question: "Which country is known as the 'Land of the Rising Sun'?", choices: ["China", "Japan", "South Korea", "Thailand"], answer: 1 },
-  { question: "Which country invented pizza?", choices: ["Italy", "Greece", "France", "Spain"], answer: 0 },
-  { question: "Which city is called the 'Big Apple'?", choices: ["Los Angeles", "Chicago", "New York", "Miami"], answer: 2 },
-  { question: "Which country has the most UNESCO sites?", choices: ["Italy", "China", "Spain", "France"], answer: 1 }, // Chine (56)
-  { question: "Which nation drinks the most coffee?", choices: ["Finland", "Norway", "Brazil", "USA"], answer: 0 },
-  { question: "Which country has the most languages?", choices: ["Papua New Guinea", "India", "Nigeria", "Indonesia"], answer: 0 }, // PNG (800+)
-  { question: "Which city is the most populous?", choices: ["Tokyo", "Delhi", "Shanghai", "São Paulo"], answer: 0 },
-  { question: "Which country is the happiest?", choices: ["Finland", "Denmark", "Switzerland", "Iceland"], answer: 0 }, // 2023
-  { question: "Which nation invented the sauna?", choices: ["Sweden", "Finland", "Russia", "Norway"], answer: 1 },
-  { question: "Which country has the most castles?", choices: ["Germany", "France", "Spain", "Wales"], answer: 0 }, // Allemagne (~25 000)
-  { question: "Which city is the oldest continuously inhabited?", choices: ["Damascus", "Jericho", "Athens", "Varanasi"], answer: 0 }, // Damas (11 000 ans)
-  { question: "Which country has no rivers?", choices: ["Saudi Arabia", "Maldives", "Kuwait", "Bahrain"], answer: 1 }, // Maldives
-  { question: "Which nation is the most vegetarian?", choices: ["India", "Israel", "Germany", "USA"], answer: 0 }, // Inde (~40%)
-  { question: "Which country has the most time zones?", choices: ["USA", "Russia", "France", "UK"], answer: 2 }, // France (12)
+  { question: "Which country is the flattest?", choices: ["Maldives", "Netherlands", "Qatar", "Denmark"], answer: 0 },
   { question: "Which city is built on 118 islands?", choices: ["Venice", "Amsterdam", "Stockholm", "Copenhagen"], answer: 0 },
-  { question: "Which country has the most pyramids?", choices: ["Egypt", "Sudan", "Mexico", "Peru"], answer: 1 }, // Soudan (200+)
-  { question: "Which nation is the most biodiverse?", choices: ["Brazil", "Colombia", "Indonesia", "Ecuador"], answer: 1 }, // Colombie
-  { question: "Which country has the most public holidays?", choices: ["Cambodia", "Sri Lanka", "India", "Thailand"], answer: 0 }, // Cambodge (28)
-  { question: "Which city is the most expensive?", choices: ["Singapore", "Zurich", "Hong Kong", "New York"], answer: 2 }, // HK (2023)
+  { question: "Which country has the most pyramids?", choices: ["Egypt", "Sudan", "Mexico", "Peru"], answer: 1 },
+  { question: "Which is the driest place on Earth?", choices: ["Atacama Desert", "McMurdo Dry Valleys", "Aswan, Egypt", "Alice Springs, Australia"], answer: 1 },
+  { question: "What is the capital of Finland?", choices: ["Helsinki", "Espoo", "Tampere", "Vantaa"], answer: 0 },
+  { question: "Which nation is the most biodiverse?", choices: ["Brazil", "Colombia", "Indonesia", "Ecuador"], answer: 1 },
+  { question: "Which river flows through Baghdad?", choices: ["Tigris", "Euphrates", "Nile", "Jordan"], answer: 0 },
+  { question: "Which country has the most public holidays?", choices: ["Cambodia", "Sri Lanka", "India", "Thailand"], answer: 0 },
+  { question: "Which mountain is in Tanzania?", choices: ["Kilimanjaro", "Everest", "K2", "Denali"], answer: 0 },
+  { question: "Which city is the most expensive?", choices: ["Singapore", "Zurich", "Hong Kong", "New York"], answer: 2 },
+  { question: "Which country is the smallest?", choices: ["Vatican", "Monaco", "Nauru", "San Marino"], answer: 0 },
+  { question: "Which African waterfall is the largest?", choices: ["Victoria Falls", "Tugela Falls", "Blue Nile Falls", "Kalambo Falls"], answer: 0 },
   { question: "Which country has the most McDonald's?", choices: ["USA", "Japan", "China", "Canada"], answer: 0 },
-  { question: "Which nation is the most connected to the internet?", choices: ["Iceland", "Norway", "Denmark", "Sweden"], answer: 0 }, // Islande (99%)
-  { question: "Which country has the most electric cars?", choices: ["Norway", "China", "USA", "Germany"], answer: 0 }, // Norvège (80% ventes)
-  { question: "Which city has the most skyscrapers?", choices: ["Dubai", "New York", "Hong Kong", "Shanghai"], answer: 2 }, // HK (657)
-  { question: "Which country has the most bicycles?", choices: ["Netherlands", "China", "Denmark", "Germany"], answer: 1 }, // Chine (500M+)
-  { question: "Which nation is the most gender-equal?", choices: ["Iceland", "Finland", "Norway", "Sweden"], answer: 0 }, // Islande
-
-  // Records (25 questions)
-  { question: "Which is the coldest inhabited place?", choices: ["Oymyakon, Russia", "Norilsk, Russia", "Barrow, USA", "Ulaanbaatar, Mongolia"], answer: 0 }, // Oymyakon (-71°C)
-  { question: "Which is the hottest place?", choices: ["Death Valley, USA", "Dasht-e Lut, Iran", "Kebili, Tunisia", "Wadi Halfa, Sudan"], answer: 1 }, // Lut Desert (80°C)
-  { question: "Which is the rainiest place?", choices: ["Mawsynram, India", "Cherrapunji, India", "Tutunendo, Colombia", "San Antonio de Ureca, Eq. Guinea"], answer: 0 }, // Mawsynram (11 871 mm/an)
-  { question: "Which is the driest place?", choices: ["Atacama Desert", "McMurdo Dry Valleys", "Aswan, Egypt", "Alice Springs, Australia"], answer: 1 }, // Antarctique
-  { question: "Which is the windiest place?", choices: ["Wellington, NZ", "Chicago, USA", "Mount Washington, USA", "Patagonia, Argentina"], answer: 2 }, // Mt Washington (372 km/h)
-  { question: "Which country is the flattest?", choices: ["Maldives", "Netherlands", "Qatar", "Denmark"], answer: 0 }, // Maldives (2,4m max)
-  { question: "Which city is the highest?", choices: ["La Paz, Bolivia", "Quito, Ecuador", "Lhasa, Tibet", "Bogotá, Colombia"], answer: 0 }, // La Paz (3 650m)
-  { question: "Which country is the smallest?", choices: ["Vatican", "Monaco", "Nauru", "San Marino"], answer: 0 }, // Vatican (0,44 km²)
-  { question: "Which island is the most remote?", choices: ["Tristan da Cunha", "Pitcairn", "Easter Island", "Bouvet Island"], answer: 0 }, // Tristan (2 816 km)
-  { question: "Which country is the newest?", choices: ["South Sudan", "Kosovo", "Montenegro", "Timor-Leste"], answer: 0 }, // Soudan du Sud (2011)
-  { question: "Which bridge is the longest?", choices: ["Danyang–Kunshan (China)", "Lake Pontchartrain (USA)", "Bang Na (Thailand)", "Jiaozhou Bay (China)"], answer: 0 }, // Danyang (164 km)
-  { question: "Which tunnel is the longest?", choices: ["Gotthard (Switzerland)", "Seikan (Japan)", "Channel Tunnel", "Laerdal (Norway)"], answer: 0 }, // Gotthard (57 km)
-  { question: "Which building is the tallest?", choices: ["Burj Khalifa", "Merdeka 118", "Shanghai Tower", "Abraj Al-Bait"], answer: 0 }, // Burj (828m)
-  { question: "Which dam is the largest?", choices: ["Three Gorges (China)", "Itaipu (Brazil/Paraguay)", "Xiluodu (China)", "Grand Coulee (USA)"], answer: 0 }, // Three Gorges
-  { question: "Which airport is the busiest?", choices: ["Atlanta, USA", "Dubai, UAE", "Beijing, China", "Los Angeles, USA"], answer: 0 }, // Atlanta (104M passagers)
-  { question: "Which metro is the longest?", choices: ["Shanghai", "Beijing", "London", "New York"], answer: 0 }, // Shanghai (831 km)
-  { question: "Which road is the longest?", choices: ["Pan-American Highway", "Trans-Siberian", "Australian Highway 1", "Trans-Canada"], answer: 0 }, // Pan-Am (30 000 km)
-  { question: "Which country has the most borders?", choices: ["China", "Russia", "Brazil", "Germany"], answer: 1 }, // Russie
-  { question: "Which city is the most northern?", choices: ["Longyearbyen, Norway", "Utqiagvik, USA", "Murmansk, Russia", "Tromsø, Norway"], answer: 0 }, // Longyearbyen
-  { question: "Which country is the most visited?", choices: ["France", "Spain", "USA", "China"], answer: 0 }, // France (89M)
-  { question: "Which language has the most words?", choices: ["English", "Arabic", "French", "Russian"], answer: 0 }, // Anglais (~200 000)
-  { question: "Which religion is the oldest?", choices: ["Hinduism", "Judaism", "Zoroastrianism", "Buddhism"], answer: 0 }, // Hindouisme (~4 000 ans)
-  { question: "Which company is the most valuable?", choices: ["Apple", "Saudi Aramco", "Microsoft", "Alphabet"], answer: 1 }, // Aramco ($2T)
-  { question: "Which animal is the fastest?", choices: ["Cheetah", "Peregrine Falcon", "Sailfish", "Spine-Tailed Swift"], answer: 1 }, // Faucon (389 km/h)
-  { question: "Which plant is the tallest?", choices: ["Redwood", "Eucalyptus", "Douglas Fir", "Sitka Spruce"], answer: 0 } // Séquoia (115m)
+  { question: "Which island is the most remote?", choices: ["Tristan da Cunha", "Pitcairn", "Easter Island", "Bouvet Island"], answer: 0 },
+  { question: "What is the capital of Pakistan?", choices: ["Karachi", "Lahore", "Islamabad", "Rawalpindi"], answer: 2 },
+  { question: "Which nation is the most connected to the internet?", choices: ["Iceland", "Norway", "Denmark", "Sweden"], answer: 0 },
+  { question: "Which country is the newest?", choices: ["South Sudan", "Kosovo", "Montenegro", "Timor-Leste"], answer: 0 },
+  { question: "Which city has the most skyscrapers?", choices: ["Dubai", "New York", "Hong Kong", "Shanghai"], answer: 2 },
+  { question: "Which bridge is the longest?", choices: ["Danyang–Kunshan (China)", "Lake Pontchartrain (USA)", "Bang Na (Thailand)", "Jiaozhou Bay (China)"], answer: 0 },
+  { question: "What is the capital of Egypt?", choices: ["Alexandria", "Cairo", "Giza", "Luxor"], answer: 1 },
+  { question: "Which country has the most electric cars?", choices: ["Norway", "China", "USA", "Germany"], answer: 0 },
+  { question: "Which tunnel is the longest?", choices: ["Gotthard (Switzerland)", "Seikan (Japan)", "Channel Tunnel", "Laerdal (Norway)"], answer: 0 },
+  { question: "Which country has the most bicycles?", choices: ["Netherlands", "China", "Denmark", "Germany"], answer: 1 },
+  { question: "Which building is the tallest?", choices: ["Burj Khalifa", "Merdeka 118", "Shanghai Tower", "Abraj Al-Bait"], answer: 0 },
+  { question: "What is the capital of Colombia?", choices: ["Medellín", "Bogotá", "Cali", "Barranquilla"], answer: 1 },
+  { question: "Which nation is the most gender-equal?", choices: ["Iceland", "Finland", "Norway", "Sweden"], answer: 0 },
+  { question: "Which dam is the largest?", choices: ["Three Gorges (China)", "Itaipu (Brazil/Paraguay)", "Xiluodu (China)", "Grand Coulee (USA)"], answer: 0 },
+  { question: "Which country has the most borders?", choices: ["China (16)", "Russia (14)", "Brazil (10)", "Germany (9)"], answer: 1 },
+  { question: "What is the capital of Ukraine?", choices: ["Kyiv", "Kharkiv", "Odessa", "Lviv"], answer: 0 },
+  { question: "Which airport is the busiest?", choices: ["Atlanta, USA", "Dubai, UAE", "Beijing, China", "Los Angeles, USA"], answer: 0 },
+  { question: "Which country is the most visited?", choices: ["France", "Spain", "USA", "China"], answer: 0 },
+  { question: "What is the capital of Saudi Arabia?", choices: ["Mecca", "Riyadh", "Jeddah", "Medina"], answer: 1 },
+  { question: "Which language has the most words?", choices: ["English", "Arabic", "French", "Russian"], answer: 0 },
+  { question: "Which metro is the longest?", choices: ["Shanghai", "Beijing", "London", "New York"], answer: 0 },
+  { question: "What is the capital of Bangladesh?", choices: ["Chittagong", "Dhaka", "Khulna", "Rajshahi"], answer: 1 },
+  { question: "Which religion is the oldest?", choices: ["Hinduism", "Judaism", "Zoroastrianism", "Buddhism"], answer: 0 },
+  { question: "Which road is the longest?", choices: ["Pan-American Highway", "Trans-Siberian", "Australian Highway 1", "Trans-Canada"], answer: 0 },
+  { question: "What is the capital of Angola?", choices: ["Luanda", "Lubango", "Huambo", "Benguela"], answer: 0 },
+  { question: "Which company is the most valuable?", choices: ["Apple", "Saudi Aramco", "Microsoft", "Alphabet"], answer: 1 },
+  { question: "Which city is the most northern?", choices: ["Longyearbyen, Norway", "Utqiagvik, USA", "Murmansk, Russia", "Tromsø, Norway"], answer: 0 },
+  { question: "What is the capital of Cuba?", choices: ["Havana", "Santiago de Cuba", "Camagüey", "Holguín"], answer: 0 },
+  { question: "Which animal is the fastest?", choices: ["Cheetah", "Peregrine Falcon", "Sailfish", "Spine-Tailed Swift"], answer: 1 },
+  { question: "What is the capital of Portugal?", choices: ["Lisbon", "Porto", "Braga", "Faro"], answer: 0 },
+  { question: "Which plant is the tallest?", choices: ["Redwood", "Eucalyptus", "Douglas Fir", "Sitka Spruce"], answer: 0 },
+  { question: "What is the capital of Greece?", choices: ["Athens", "Thessaloniki", "Patras", "Heraklion"], answer: 0 },
+  { question: "Which is the windiest place on Earth?", choices: ["Wellington, NZ", "Chicago, USA", "Mount Washington, USA", "Patagonia, Argentina"], answer: 2 }
 
     ];
 
