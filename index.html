@@ -5,31 +5,88 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Geography Quiz</title>
   <style>
+    :root {
+      --primary-color: #3b3054;
+      --secondary-color: #ff6b6b;
+      --bg-light: linear-gradient(to right, #fff7f0, #e0f7fa);
+      --card-light: #ffffff;
+      --text-light: #3b3054;
+      --choice-light: #e0f7fa;
+      --choice-hover: #b2ebf2;
+      --correct-light: #d4edda;
+      --incorrect-light: #f8d7da;
+      
+      --bg-dark: linear-gradient(to right, #121212, #1e1e1e);
+      --card-dark: #2d2d2d;
+      --text-dark: #f5f5f5;
+      --choice-dark: #3a3a3a;
+      --choice-hover-dark: #4a4a4a;
+      --correct-dark: #2d5a2d;
+      --incorrect-dark: #5a2d2d;
+    }
+
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to right, #fff7f0, #e0f7fa);
-      color: #3b3054;
+      background: var(--bg-light);
+      color: var(--text-light);
       display: flex;
       flex-direction: column;
       align-items: center;
       padding: 20px;
+      min-height: 100vh;
+      transition: all 0.3s ease;
+    }
+
+    body.dark-mode {
+      background: var(--bg-dark);
+      color: var(--text-dark);
     }
 
     h1 {
       font-size: 2.4em;
-      color: #3b3054;
+      color: var(--primary-color);
       text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
       margin-bottom: 10px;
     }
 
+    .dark-mode h1 {
+      color: #f5f5f5;
+    }
+
     .quiz-card {
-      background: #ffffff;
+      background: var(--card-light);
       border-radius: 20px;
       padding: 30px 25px;
       box-shadow: 0 8px 25px rgba(0,0,0,0.12);
       max-width: 600px;
       width: 100%;
+      transition: all 0.3s ease;
+    }
+
+    .dark-mode .quiz-card {
+      background: var(--card-dark);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    }
+
+    .progress-container {
+      width: 100%;
+      height: 8px;
+      background: #e0e0e0;
+      border-radius: 4px;
+      margin: 15px 0;
+      overflow: hidden;
+    }
+
+    .dark-mode .progress-container {
+      background: #3a3a3a;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: var(--secondary-color);
+      width: 0%;
+      transition: width 0.3s ease;
     }
 
     .choices {
@@ -40,7 +97,7 @@
     }
 
     .choices label {
-      background: #e0f7fa;
+      background: var(--choice-light);
       padding: 14px 16px;
       border-radius: 12px;
       box-shadow: 2px 2px 6px rgba(0,0,0,0.06);
@@ -50,8 +107,17 @@
       align-items: center;
     }
 
+    .dark-mode .choices label {
+      background: var(--choice-dark);
+      box-shadow: 2px 2px 6px rgba(0,0,0,0.2);
+    }
+
     .choices label:hover {
-      background: #b2ebf2;
+      background: var(--choice-hover);
+    }
+
+    .dark-mode .choices label:hover {
+      background: var(--choice-hover-dark);
     }
 
     .choices input[type="radio"] {
@@ -59,15 +125,23 @@
     }
 
     .correct {
-      background-color: #d4edda !important;
+      background-color: var(--correct-light) !important;
       border: 2px solid #28a745;
       color: #155724;
     }
 
+    .dark-mode .correct {
+      background-color: var(--correct-dark) !important;
+    }
+
     .incorrect {
-      background-color: #f8d7da !important;
+      background-color: var(--incorrect-light) !important;
       border: 2px solid #dc3545;
       color: #721c24;
+    }
+
+    .dark-mode .incorrect {
+      background-color: var(--incorrect-dark) !important;
     }
 
     .feedback {
@@ -77,7 +151,7 @@
     }
 
     .btn {
-      background-color: #ff6b6b;
+      background-color: var(--secondary-color);
       color: white;
       padding: 14px 24px;
       border: none;
@@ -106,8 +180,30 @@
       margin-top: 30px;
       font-weight: 500;
       font-size: 1rem;
-      color: #3b3054;
+      color: var(--primary-color);
       text-align: center;
+    }
+
+    .dark-mode #bestScoreDisplayBox {
+      color: #f5f5f5;
+    }
+
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: var(--secondary-color);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      z-index: 100;
     }
 
     @media (max-width: 600px) {
@@ -124,6 +220,7 @@
   </style>
 </head>
 <body>
+  <button class="theme-toggle" id="themeToggle">🌓</button>
   <h1>Geography Quiz</h1>
 
   <div class="quiz-card" id="quizContainer"></div>
@@ -131,10 +228,8 @@
   <div class="result" id="result"></div>
 
   <script>
-  
-      const questions = [
-
-  { question: "Which country has the most active volcanoes?", choices: ["Indonesia", "Japan", "USA", "Chile"], answer: 0 },
+    const questions = [
+      { question: "Which country has the most active volcanoes?", choices: ["Indonesia", "Japan", "USA", "Chile"], answer: 0 },
   { question: "What is the capital of Brazil?", choices: ["Rio de Janeiro", "Brasília", "São Paulo", "Salvador"], answer: 1 },
   { question: "Which is the coldest inhabited place on Earth?", choices: ["Oymyakon, Russia", "Norilsk, Russia", "Barrow, USA", "Ulaanbaatar, Mongolia"], answer: 0 },
   { question: "Which city is called the 'Big Apple'?", choices: ["Los Angeles", "Chicago", "New York", "Miami"], answer: 2 },
@@ -234,8 +329,7 @@
   { question: "Où se trouve le point le plus éloigné de tout océan ?",  choices: ["Kazakhstan", "Chine", "Brésil", "Australie"],  answer: 1 },
   { question: "Quelle ville est traversée par le fleuve Amazone ?",   choices: ["Manaus", "Iquitos", "Belém", "Leticia"],   answer: 0  },
   { question: "Quel pays produit le plus de chocolat ?",   choices: ["Suisse", "Belgique", "Côte d'Ivoire", "Allemagne"],   answer: 2 }
-   
-    ];
+      ];
 
     let currentQuestion = 0;
     let score = 0;
@@ -249,6 +343,9 @@
           <p><strong>Question ${currentQuestion + 1} / ${questions.length}</strong></p>
           <p><strong>Score: ${score}</strong></p>
         </div>
+        <div class="progress-container">
+          <div class="progress-bar" id="progressBar"></div>
+        </div>
         <p>${q.question}</p>
         <div class="choices">
           ${q.choices.map((choice, i) =>
@@ -259,6 +356,7 @@
         <button class="btn" id="nextBtn" onclick="nextQuestion()" disabled>Next Question</button>
       `;
 
+      updateProgress();
       selected = null;
       document.querySelectorAll('input[name="choice"]').forEach(input => {
         input.addEventListener('change', (e) => {
@@ -268,6 +366,11 @@
       });
 
       document.addEventListener("keydown", handleEnter);
+    }
+
+    function updateProgress() {
+      const progress = ((currentQuestion) / questions.length) * 100;
+      document.getElementById("progressBar").style.width = `${progress}%`;
     }
 
     function validateAnswer() {
@@ -290,7 +393,7 @@
         score++;
         feedback.innerHTML = "✅ Correct!";
       } else {
-        feedback.innerHTML = `❌ Wrong. The correct answer is <strong>${questions[currentQuestion].choices[correct]}</strong>`;
+        feedback.innerHTML = `❌ Incorrect. La bonne réponse est <strong>${questions[currentQuestion].choices[correct]}</strong>`;
       }
 
       document.getElementById("nextBtn").disabled = false;
@@ -345,6 +448,21 @@
       document.getElementById("bestScoreDisplay").textContent = `${getBestScore()} / ${questions.length}`;
     }
 
+    // Gestion du mode sombre
+    function toggleDarkMode() {
+      document.body.classList.toggle("dark-mode");
+      localStorage.setItem("darkMode", document.body.classList.contains("dark-mode"));
+    }
+
+    // Vérifier le préférence utilisateur ou le localStorage
+    if (localStorage.getItem("darkMode") === "true" || 
+        (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.body.classList.add("dark-mode");
+    }
+
+    document.getElementById("themeToggle").addEventListener("click", toggleDarkMode);
+
+    // Démarrer le quiz
     showQuestion();
     document.getElementById("bestScoreDisplay").textContent = `${getBestScore()} / ${questions.length}`;
   </script>
