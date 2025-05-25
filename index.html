@@ -188,10 +188,27 @@
       color: #f5f5f5;
     }
 
-    .theme-toggle {
+    .theme-toggle-container {
       position: fixed;
       top: 20px;
       right: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      z-index: 100;
+    }
+
+    .theme-toggle-label {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--primary-color);
+    }
+
+    .dark-mode .theme-toggle-label {
+      color: #f5f5f5;
+    }
+
+    .theme-toggle {
       background: var(--secondary-color);
       color: white;
       border: none;
@@ -203,7 +220,6 @@
       justify-content: center;
       cursor: pointer;
       box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-      z-index: 100;
     }
 
     @media (max-width: 600px) {
@@ -216,11 +232,19 @@
       .btn {
         width: 100%;
       }
+      .theme-toggle-container {
+        top: 10px;
+        right: 10px;
+      }
     }
   </style>
 </head>
 <body>
-  <button class="theme-toggle" id="themeToggle">🌓</button>
+  <div class="theme-toggle-container">
+    <span class="theme-toggle-label">Mode Sombre</span>
+    <button class="theme-toggle" id="themeToggle">🌓</button>
+  </div>
+  
   <h1>Geography Quiz</h1>
 
   <div class="quiz-card" id="quizContainer"></div>
@@ -229,7 +253,7 @@
 
   <script>
     const questions = [
-      { question: "Which country has the most active volcanoes?", choices: ["Indonesia", "Japan", "USA", "Chile"], answer: 0 },
+  { question: "Which country has the most active volcanoes?", choices: ["Indonesia", "Japan", "USA", "Chile"], answer: 0 },
   { question: "What is the capital of Brazil?", choices: ["Rio de Janeiro", "Brasília", "São Paulo", "Salvador"], answer: 1 },
   { question: "Which is the coldest inhabited place on Earth?", choices: ["Oymyakon, Russia", "Norilsk, Russia", "Barrow, USA", "Ulaanbaatar, Mongolia"], answer: 0 },
   { question: "Which city is called the 'Big Apple'?", choices: ["Los Angeles", "Chicago", "New York", "Miami"], answer: 2 },
@@ -329,7 +353,8 @@
   { question: "Où se trouve le point le plus éloigné de tout océan ?",  choices: ["Kazakhstan", "Chine", "Brésil", "Australie"],  answer: 1 },
   { question: "Quelle ville est traversée par le fleuve Amazone ?",   choices: ["Manaus", "Iquitos", "Belém", "Leticia"],   answer: 0  },
   { question: "Quel pays produit le plus de chocolat ?",   choices: ["Suisse", "Belgique", "Côte d'Ivoire", "Allemagne"],   answer: 2 }
-      ];
+  
+    ];
 
     let currentQuestion = 0;
     let score = 0;
@@ -448,17 +473,22 @@
       document.getElementById("bestScoreDisplay").textContent = `${getBestScore()} / ${questions.length}`;
     }
 
-    // Gestion du mode sombre
+    // Gestion du mode sombre (désactivé par défaut)
     function toggleDarkMode() {
       document.body.classList.toggle("dark-mode");
       localStorage.setItem("darkMode", document.body.classList.contains("dark-mode"));
+      updateThemeIcon();
     }
 
-    // Vérifier le préférence utilisateur ou le localStorage
-    if (localStorage.getItem("darkMode") === "true" || 
-        (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-      document.body.classList.add("dark-mode");
+    function updateThemeIcon() {
+      const isDark = document.body.classList.contains("dark-mode");
+      document.getElementById("themeToggle").textContent = isDark ? "☀️" : "🌙";
     }
+
+    // Désactiver le mode sombre par défaut
+    document.body.classList.remove("dark-mode");
+    localStorage.setItem("darkMode", "false");
+    updateThemeIcon();
 
     document.getElementById("themeToggle").addEventListener("click", toggleDarkMode);
 
