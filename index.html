@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Geography Quiz</title>
+  <title>Quiz de Géographie</title>
   <style>
     :root {
       --primary-color: #3b3054;
@@ -222,6 +222,64 @@
       box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     }
 
+    .level-container {
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
+      text-align: center;
+      max-width: 500px;
+      margin: 20px auto;
+    }
+    
+    .dark-mode .level-container {
+      background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+    }
+    
+    .level-title {
+      font-size: 1.8em;
+      margin-bottom: 10px;
+      color: var(--primary-color);
+    }
+    
+    .dark-mode .level-title {
+      color: #f5f5f5;
+    }
+    
+    .level-description {
+      font-size: 1.1em;
+      line-height: 1.5;
+    }
+    
+    .level-icon {
+      font-size: 3em;
+      margin: 15px 0;
+    }
+    
+    .level-novice {
+      border-left: 5px solid #e74c3c;
+    }
+    
+    .level-beginner {
+      border-left: 5px solid #e67e22;
+    }
+    
+    .level-intermediate {
+      border-left: 5px solid #f1c40f;
+    }
+    
+    .level-advanced {
+      border-left: 5px solid #2ecc71;
+    }
+    
+    .level-expert {
+      border-left: 5px solid #3498db;
+    }
+    
+    .level-master {
+      border-left: 5px solid #9b59b6;
+    }
+
     @media (max-width: 600px) {
       .choices {
         grid-template-columns: 1fr;
@@ -236,129 +294,128 @@
         top: 10px;
         right: 10px;
       }
+      h1 {
+        font-size: 1.8em;
+        margin-top: 40px;
+      }
     }
   </style>
 </head>
 <body>
   <div class="theme-toggle-container">
     <span class="theme-toggle-label">Mode Sombre</span>
-    <button class="theme-toggle" id="themeToggle">🌓</button>
+    <button class="theme-toggle" id="themeToggle">🌙</button>
   </div>
   
-  <h1>Geography Quiz</h1>
+  <h1>Quiz de Géographie</h1>
 
   <div class="quiz-card" id="quizContainer"></div>
-  <div id="bestScoreDisplayBox">🏅 Best Score: <strong id="bestScoreDisplay"></strong></div>
+  <div id="bestScoreDisplayBox">🏅 Meilleur score: <strong id="bestScoreDisplay"></strong></div>
   <div class="result" id="result"></div>
 
   <script>
     const questions = [
-  { question: "Which country has the most active volcanoes?", choices: ["Indonesia", "Japan", "USA", "Chile"], answer: 0 },
-  { question: "What is the capital of Brazil?", choices: ["Rio de Janeiro", "Brasília", "São Paulo", "Salvador"], answer: 1 },
-  { question: "Which is the coldest inhabited place on Earth?", choices: ["Oymyakon, Russia", "Norilsk, Russia", "Barrow, USA", "Ulaanbaatar, Mongolia"], answer: 0 },
-  { question: "Which city is called the 'Big Apple'?", choices: ["Los Angeles", "Chicago", "New York", "Miami"], answer: 2 },
-  { question: "Which river flows through Paris?", choices: ["Seine", "Loire", "Rhône", "Garonne"], answer: 0 },
-  { question: "Which country invented pizza?", choices: ["Italy", "Greece", "France", "Spain"], answer: 0 },
-  { question: "Which is the largest desert in the world?", choices: ["Sahara", "Arabian", "Gobi", "Kalahari"], answer: 0 },
-  { question: "What is the capital of Japan?", choices: ["Kyoto", "Osaka", "Tokyo", "Hiroshima"], answer: 2 },
-  { question: "Which mountain is the highest in Africa?", choices: ["Mount Kenya", "Mount Kilimanjaro", "Mount Stanley", "Mount Meru"], answer: 1 },
-  { question: "Which country is known as the 'Land of the Rising Sun'?", choices: ["China", "Japan", "South Korea", "Thailand"], answer: 1 },
-  { question: "Which ocean is the smallest?", choices: ["Arctic", "Indian", "Southern", "Atlantic"], answer: 0 },
-  { question: "What is the capital of South Africa?", choices: ["Cape Town", "Pretoria", "Johannesburg", "Durban"], answer: 1 },
-  { question: "Which waterfall is the tallest in the world?", choices: ["Angel Falls", "Victoria Falls", "Niagara Falls", "Iguazu Falls"], answer: 0 },
-  { question: "Which country has the most UNESCO sites?", choices: ["Italy", "China", "Spain", "France"], answer: 1 },
-  { question: "Which European river is the longest?", choices: ["Danube", "Volga", "Rhine", "Seine"], answer: 1 },
-  { question: "Which city is the oldest continuously inhabited?", choices: ["Damascus", "Jericho", "Athens", "Varanasi"], answer: 0 },
-  { question: "Which desert is located in Chile?", choices: ["Atacama", "Patagonian", "Sonoran", "Mojave"], answer: 0 },
-  { question: "What is the capital of New Zealand?", choices: ["Auckland", "Wellington", "Christchurch", "Hamilton"], answer: 1 },
-  { question: "Which country has the most natural lakes?", choices: ["Canada", "Finland", "Russia", "USA"], answer: 0 },
-  { question: "Which nation drinks the most coffee?", choices: ["Finland", "Norway", "Brazil", "USA"], answer: 0 },
-  { question: "Which mountain range spans the USA and Canada?", choices: ["Rockies", "Andes", "Alps", "Himalayas"], answer: 0 },
-  { question: "Which country has no rivers?", choices: ["Saudi Arabia", "Maldives", "Kuwait", "Bahrain"], answer: 1 },
-  { question: "Which sea is the saltiest?", choices: ["Dead Sea", "Red Sea", "Mediterranean", "Caspian"], answer: 0 },
-  { question: "What is the capital of Turkey?", choices: ["Istanbul", "Ankara", "Izmir", "Antalya"], answer: 1 },
-  { question: "Which country contains the Amazon Rainforest?", choices: ["Brazil", "Peru", "Colombia", "All of the above"], answer: 3 },
-  { question: "Which city is the most populous?", choices: ["Tokyo", "Delhi", "Shanghai", "São Paulo"], answer: 0 },
-  { question: "Which island is the largest in the world?", choices: ["Greenland", "New Guinea", "Borneo", "Madagascar"], answer: 0 },
-  { question: "What is the capital of Malaysia?", choices: ["Kuala Lumpur", "Putrajaya", "Penang", "Johor Bahru"], answer: 0 },
-  { question: "Which country has the most glaciers?", choices: ["Canada", "Greenland", "Iceland", "Antarctica"], answer: 3 },
-  { question: "Which nation is the happiest?", choices: ["Finland", "Denmark", "Switzerland", "Iceland"], answer: 0 },
-  { question: "Which strait connects the Atlantic and Mediterranean?", choices: ["Gibraltar", "Bosporus", "Bering", "Malacca"], answer: 0 },
-  { question: "Which country invented the sauna?", choices: ["Sweden", "Finland", "Russia", "Norway"], answer: 1 },
-  { question: "Which lake is the deepest in Africa?", choices: ["Lake Tanganyika", "Lake Victoria", "Lake Malawi", "Lake Turkana"], answer: 0 },
-  { question: "Which country has the most castles?", choices: ["Germany", "France", "Spain", "Wales"], answer: 0 },
-  { question: "Which river is sacred in Hinduism?", choices: ["Ganges", "Brahmaputra", "Indus", "Yamuna"], answer: 0 },
-  { question: "Which is the hottest place on Earth?", choices: ["Death Valley, USA", "Dasht-e Lut, Iran", "Kebili, Tunisia", "Wadi Halfa, Sudan"], answer: 1 },
-  { question: "What is the capital of Kenya?", choices: ["Mombasa", "Nairobi", "Kisumu", "Nakuru"], answer: 1 },
-  { question: "Which country has the most coastline?", choices: ["Canada", "Norway", "Indonesia", "Australia"], answer: 0 },
-  { question: "Which nation has the most islands?", choices: ["Sweden", "Finland", "Norway", "Canada"], answer: 0 },
-  { question: "Which desert is in Mongolia?", choices: ["Gobi", "Taklamakan", "Karakum", "Kyzylkum"], answer: 0 },
-  { question: "Which city is the highest capital?", choices: ["La Paz, Bolivia", "Quito, Ecuador", "Lhasa, Tibet", "Bogotá, Colombia"], answer: 0 },
-  { question: "Which country is entirely in the Himalayas?", choices: ["Bhutan", "Nepal", "Tibet", "Pakistan"], answer: 0 },
-  { question: "Which volcano destroyed Pompeii?", choices: ["Vesuvius", "Etna", "Stromboli", "Krakatoa"], answer: 0 },
-  { question: "What is the capital of Vietnam?", choices: ["Ho Chi Minh City", "Hanoi", "Da Nang", "Hai Phong"], answer: 1 },
-  { question: "Which sea borders Greece and Turkey?", choices: ["Aegean", "Adriatic", "Ionian", "Mediterranean"], answer: 0 },
-  { question: "Which country has the most active geysers?", choices: ["USA", "Iceland", "Russia", "New Zealand"], answer: 1 },
-  { question: "Which African river is the longest?", choices: ["Nile", "Congo", "Niger", "Zambezi"], answer: 0 },
-  { question: "Which is the rainiest place on Earth?", choices: ["Mawsynram, India", "Cherrapunji, India", "Tutunendo, Colombia", "San Antonio de Ureca, Eq. Guinea"], answer: 0 },
-  { question: "What is the capital of Argentina?", choices: ["Buenos Aires", "Córdoba", "Rosario", "Mendoza"], answer: 0 },
-  { question: "Which canyon is the largest?", choices: ["Grand Canyon", "Fish River Canyon", "Colca Canyon", "Copper Canyon"], answer: 0 },
-  { question: "Which country is the flattest?", choices: ["Maldives", "Netherlands", "Qatar", "Denmark"], answer: 0 },
-  { question: "Which city is built on 118 islands?", choices: ["Venice", "Amsterdam", "Stockholm", "Copenhagen"], answer: 0 },
-  { question: "Which country has the most pyramids?", choices: ["Egypt", "Sudan", "Mexico", "Peru"], answer: 1 },
-  { question: "Which is the driest place on Earth?", choices: ["Atacama Desert", "McMurdo Dry Valleys", "Aswan, Egypt", "Alice Springs, Australia"], answer: 1 },
-  { question: "What is the capital of Finland?", choices: ["Helsinki", "Espoo", "Tampere", "Vantaa"], answer: 0 },
-  { question: "Which nation is the most biodiverse?", choices: ["Brazil", "Colombia", "Indonesia", "Ecuador"], answer: 1 },
-  { question: "Which river flows through Baghdad?", choices: ["Tigris", "Euphrates", "Nile", "Jordan"], answer: 0 },
-  { question: "Which country has the most public holidays?", choices: ["Cambodia", "Sri Lanka", "India", "Thailand"], answer: 0 },
-  { question: "Which mountain is in Tanzania?", choices: ["Kilimanjaro", "Everest", "K2", "Denali"], answer: 0 },
-  { question: "Which city is the most expensive?", choices: ["Singapore", "Zurich", "Hong Kong", "New York"], answer: 2 },
-  { question: "Which country is the smallest?", choices: ["Vatican", "Monaco", "Nauru", "San Marino"], answer: 0 },
-  { question: "Which African waterfall is the largest?", choices: ["Victoria Falls", "Tugela Falls", "Blue Nile Falls", "Kalambo Falls"], answer: 0 },
-  { question: "Which country has the most McDonald's?", choices: ["USA", "Japan", "China", "Canada"], answer: 0 },
-  { question: "Which island is the most remote?", choices: ["Tristan da Cunha", "Pitcairn", "Easter Island", "Bouvet Island"], answer: 0 },
-  { question: "What is the capital of Pakistan?", choices: ["Karachi", "Lahore", "Islamabad", "Rawalpindi"], answer: 2 },
-  { question: "Which nation is the most connected to the internet?", choices: ["Iceland", "Norway", "Denmark", "Sweden"], answer: 0 },
-  { question: "Which country is the newest?", choices: ["South Sudan", "Kosovo", "Montenegro", "Timor-Leste"], answer: 0 },
-  { question: "Which city has the most skyscrapers?", choices: ["Dubai", "New York", "Hong Kong", "Shanghai"], answer: 2 },
-  { question: "Which bridge is the longest?", choices: ["Danyang–Kunshan (China)", "Lake Pontchartrain (USA)", "Bang Na (Thailand)", "Jiaozhou Bay (China)"], answer: 0 },
-  { question: "What is the capital of Egypt?", choices: ["Alexandria", "Cairo", "Giza", "Luxor"], answer: 1 },
-  { question: "Which country has the most electric cars?", choices: ["Norway", "China", "USA", "Germany"], answer: 0 },
-  { question: "Which tunnel is the longest?", choices: ["Gotthard (Switzerland)", "Seikan (Japan)", "Channel Tunnel", "Laerdal (Norway)"], answer: 0 },
-  { question: "Which country has the most bicycles?", choices: ["Netherlands", "China", "Denmark", "Germany"], answer: 1 },
-  { question: "Which building is the tallest?", choices: ["Burj Khalifa", "Merdeka 118", "Shanghai Tower", "Abraj Al-Bait"], answer: 0 },
-  { question: "What is the capital of Colombia?", choices: ["Medellín", "Bogotá", "Cali", "Barranquilla"], answer: 1 },
-  { question: "Which nation is the most gender-equal?", choices: ["Iceland", "Finland", "Norway", "Sweden"], answer: 0 },
-  { question: "Which dam is the largest?", choices: ["Three Gorges (China)", "Itaipu (Brazil/Paraguay)", "Xiluodu (China)", "Grand Coulee (USA)"], answer: 0 },
-  { question: "Which country has the most borders?", choices: ["China (16)", "Russia (14)", "Brazil (10)", "Germany (9)"], answer: 1 },
-  { question: "What is the capital of Ukraine?", choices: ["Kyiv", "Kharkiv", "Odessa", "Lviv"], answer: 0 },
-  { question: "Which airport is the busiest?", choices: ["Atlanta, USA", "Dubai, UAE", "Beijing, China", "Los Angeles, USA"], answer: 0 },
-  { question: "Which country is the most visited?", choices: ["France", "Spain", "USA", "China"], answer: 0 },
-  { question: "What is the capital of Saudi Arabia?", choices: ["Mecca", "Riyadh", "Jeddah", "Medina"], answer: 1 },
-  { question: "Which language has the most words?", choices: ["English", "Arabic", "French", "Russian"], answer: 0 },
-  { question: "Which metro is the longest?", choices: ["Shanghai", "Beijing", "London", "New York"], answer: 0 },
-  { question: "What is the capital of Bangladesh?", choices: ["Chittagong", "Dhaka", "Khulna", "Rajshahi"], answer: 1 },
-  { question: "Which religion is the oldest?", choices: ["Hinduism", "Judaism", "Zoroastrianism", "Buddhism"], answer: 0 },
-  { question: "Which road is the longest?", choices: ["Pan-American Highway", "Trans-Siberian", "Australian Highway 1", "Trans-Canada"], answer: 0 },
-  { question: "What is the capital of Angola?", choices: ["Luanda", "Lubango", "Huambo", "Benguela"], answer: 0 },
-  { question: "Which company is the most valuable?", choices: ["Apple", "Saudi Aramco", "Microsoft", "Alphabet"], answer: 1 },
-  { question: "Which city is the most northern?", choices: ["Longyearbyen, Norway", "Utqiagvik, USA", "Murmansk, Russia", "Tromsø, Norway"], answer: 0 },
-  { question: "What is the capital of Cuba?", choices: ["Havana", "Santiago de Cuba", "Camagüey", "Holguín"], answer: 0 },
-  { question: "Which animal is the fastest?", choices: ["Cheetah", "Peregrine Falcon", "Sailfish", "Spine-Tailed Swift"], answer: 1 },
-  { question: "What is the capital of Portugal?", choices: ["Lisbon", "Porto", "Braga", "Faro"], answer: 0 },
-  { question: "Which plant is the tallest?", choices: ["Redwood", "Eucalyptus", "Douglas Fir", "Sitka Spruce"], answer: 0 },
-  { question: "What is the capital of Greece?", choices: ["Athens", "Thessaloniki", "Patras", "Heraklion"], answer: 0 },
-  { question: "Which is the windiest place on Earth?", choices: ["Wellington, NZ", "Chicago, USA", "Mount Washington, USA", "Patagonia, Argentina"], answer: 2 },
-  { question: "Quel pays a changé de capitale en 2022 ?",  choices: ["Indonésie", "Égypte", "Malaisie", "Birmanie"], answer: 0 },
-  { question: "Où se trouve le point le plus éloigné de tout océan ?",  choices: ["Kazakhstan", "Chine", "Brésil", "Australie"],  answer: 1 },
-  { question: "Quelle ville est traversée par le fleuve Amazone ?",   choices: ["Manaus", "Iquitos", "Belém", "Leticia"],   answer: 0  },
-  { question: "Quel pays produit le plus de chocolat ?",   choices: ["Suisse", "Belgique", "Côte d'Ivoire", "Allemagne"],   answer: 2 }
-  
+      { question: "Quelle est la capitale du Canada?", choices: ["Toronto", "Vancouver", "Ottawa", "Montréal"], answer: 2 },
+      { question: "Quel est le plus long fleuve du monde?", choices: ["Amazone", "Nil", "Yangzi Jiang", "Mississippi"], answer: 1 },
+      { question: "Quel pays a la plus grande population?", choices: ["États-Unis", "Inde", "Chine", "Indonésie"], answer: 2 },
+      { question: "Dans quel continent se trouve le désert du Sahara?", choices: ["Afrique", "Asie", "Amérique du Sud", "Australie"], answer: 0 },
+      { question: "Quel océan borde la côte ouest de la France?", choices: ["Atlantique", "Arctique", "Indien", "Pacifique"], answer: 0 },
+      { question: "Quel pays est célèbre pour ses geysers?", choices: ["Islande", "Japon", "États-Unis", "Nouvelle-Zélande"], answer: 0 },
+      { question: "Quel pays abrite l'ancienne ville de Petra?", choices: ["Liban", "Jordanie", "Syrie", "Israël"], answer: 1 },
+      { question: "Quel pays est le plus grand producteur de diamants?", choices: ["Russie", "Botswana", "Afrique du Sud", "Canada"], answer: 0 },
+      { question: "Quelle ville est la capitale de la Thaïlande?", choices: ["Bangkok", "Phuket", "Chiang Mai", "Pattaya"], answer: 0 },
+      { question: "Quel fleuve traverse Bagdad?", choices: ["Tigre", "Euphrate", "Nil", "Jourdain"], answer: 0 },
+      { question: "Quel pays est connu pour ses fjords et le soleil de minuit?", choices: ["Suède", "Finlande", "Norvège", "Islande"], answer: 2 },
+      { question: "Quel État américain est célèbre pour sa musique jazz?", choices: ["Louisiane", "New York", "Californie", "Texas"], answer: 0 },
+      { question: "Quel pays a la plus grande population musulmane?", choices: ["Indonésie", "Pakistan", "Inde", "Bangladesh"], answer: 0 },
+      { question: "Quel continent est le plus froid?", choices: ["Amérique du Nord", "Asie", "Antarctique", "Europe"], answer: 2 },
+      { question: "Quelle est la plus grande ville d'Afrique?", choices: ["Lagos", "Le Caire", "Kinshasa", "Johannesburg"], answer: 0 },
+      { question: "Quelle est la mer entre l'Arabie saoudite et l'Afrique?", choices: ["Rouge", "Morte", "Arabique", "Méditerranée"], answer: 0 },
+      { question: "Quelle est la capitale la plus haute du monde?", choices: ["La Paz", "Quito", "Katmandou", "Thimphou"], answer: 0 },
+      { question: "À quel pays appartiennent les îles Galápagos?", choices: ["Colombie", "Équateur", "Pérou", "Chile"], answer: 1 },
+      { question: "Quel pays abrite la forêt amazonienne?", choices: ["Brésil", "Colombie", "Venezuela", "Pérou"], answer: 0 },
+      { question: "Quel océan entoure les Maldives?", choices: ["Atlantique", "Indien", "Pacifique", "Arctique"], answer: 1 },
+      { question: "Quel pays est surnommé 'Terre de Feu et de Glace'?", choices: ["Islande", "Groenland", "Norvège", "Suède"], answer: 0 },
+      { question: "Quelle est la capitale de la Turquie?", choices: ["Istanbul", "Ankara", "Izmir", "Antalya"], answer: 1 },
+      { question: "Quelle montagne est la plus haute d'Amérique du Nord?", choices: ["Mont Logan", "Denali", "Mont Rainier", "Mont Whitney"], answer: 1 },
+      { question: "Quel État américain a le plus long littoral?", choices: ["Floride", "Californie", "Alaska", "Hawaï"], answer: 2 },
+      { question: "Quel pays est surnommé 'Pays des Mille Lacs'?", choices: ["Finlande", "Suède", "Norvège", "Canada"], answer: 0 },
+      { question: "Quel fleuve traverse Londres?", choices: ["Tamise", "Seine", "Danube", "Rhin"], answer: 0 },
+      { question: "Quelle est la capitale de l'Argentine?", choices: ["Buenos Aires", "Córdoba", "Rosario", "Mendoza"], answer: 0 },
+      { question: "Quel pays abrite la Grande Muraille?", choices: ["Chine", "Mongolie", "Japon", "Corée"], answer: 0 },
+      { question: "Quel pays a le plus de volcans?", choices: ["Indonésie", "Japon", "États-Unis", "Italie"], answer: 0 },
+      { question: "Quel continent est surnommé 'Continent Noir'?", choices: ["Asie", "Afrique", "Australie", "Amérique du Sud"], answer: 1 },
+      { question: "Quel pays a le plus de sites du patrimoine mondial de l'UNESCO?", choices: ["Italie", "Chine", "Espagne", "France"], answer: 1 },
+      { question: "Quel pays a la forme d'une botte?", choices: ["Italie", "Grèce", "Espagne", "Portugal"], answer: 0 },
+      { question: "Quel est le plus petit pays du monde?", choices: ["Monaco", "Vatican", "Nauru", "Saint-Marin"], answer: 1 },
+      { question: "Quel pays est connu pour ses fjords?", choices: ["Norvège", "Suède", "Finlande", "Danemark"], answer: 0 },
+      { question: "Quel désert est le plus grand désert chaud?", choices: ["Sahara", "Gobi", "Kalahari", "Mojave"], answer: 0 },
+      { question: "Quelle est la fosse océanique la plus profonde?", choices: ["Fosse des Mariannes", "Fosse des Tonga", "Fosse de Porto Rico", "Fosse de Java"], answer: 0 },
+      { question: "Quel continent a le plus de pays?", choices: ["Asie", "Afrique", "Europe", "Amérique du Sud"], answer: 1 },
+      { question: "Quelle ville est célèbre pour ses canaux et gondoles?", choices: ["Venise", "Amsterdam", "Bangkok", "Bruges"], answer: 0 },
+      { question: "Quel pays est la plus grande île du monde?", choices: ["Australie", "Groenland", "Madagascar", "Bornéo"], answer: 1 },
+      { question: "Quel continent est considéré comme le berceau de la civilisation?", choices: ["Europe", "Asie", "Afrique", "Amérique du Sud"], answer: 1 },
+      { question: "Quel pays est célèbre pour le Taj Mahal?", choices: ["Pakistan", "Inde", "Bangladesh", "Népal"], answer: 1 },
+      { question: "Quel État américain est surnommé 'Sunshine State'?", choices: ["Californie", "Floride", "Texas", "Arizona"], answer: 1 },
+      { question: "Quel est le plus long fleuve d'Europe?", choices: ["Volga", "Danube", "Rhin", "Seine"], answer: 0 },
+      { question: "Quel pays a le plus de lacs?", choices: ["Canada", "Finlande", "Russie", "États-Unis"], answer: 0 },
+      { question: "Quel pays a la plus grande superficie?", choices: ["États-Unis", "Chine", "Russie", "Canada"], answer: 2 },
+      { question: "Quelle ville est surnommée 'Ville Lumière'?", choices: ["Paris", "Londres", "New York", "Rome"], answer: 0 },
+      { question: "À quel pays appartient la Grande Barrière de Corail?", choices: ["Australie", "Fidji", "Philippines", "Indonésie"], answer: 0 },
+      { question: "Quel pays est célèbre pour les pyramides de Gizeh?", choices: ["Égypte", "Soudan", "Maroc", "Libye"], answer: 0 },
+      { question: "Quelle chaîne de montagnes sépare l'Europe et l'Asie?", choices: ["Alpes", "Carpates", "Oural", "Himalaya"], answer: 2 },
+      { question: "Quel pays est le plus grand archipel du monde?", choices: ["Indonésie", "Philippines", "Japon", "Maldives"], answer: 0 },
+      { question: "Quel pays abrite le mont Kilimandjaro?", choices: ["Kenya", "Tanzanie", "Ouganda", "Éthiopie"], answer: 1 },
+      { question: "Quel pays est connu pour ses tulipes et moulins à vent?", choices: ["Pays-Bas", "Belgique", "Danemark", "Allemagne"], answer: 0 },
+      { question: "Quel fleuve traverse Paris?", choices: ["Seine", "Tamise", "Danube", "Rhin"], answer: 0 },
+      { question: "Quel pays est surnommé 'Pays du Soleil Levant'?", choices: ["Japon", "Chine", "Corée du Sud", "Thaïlande"], answer: 0 },
+      { question: "Quelle ville américaine est surnommée 'Big Apple'?", choices: ["New York", "Chicago", "Los Angeles", "San Francisco"], answer: 0 },
+      { question: "Quel désert se trouve en Australie?", choices: ["Grand Désert de Victoria", "Sahara", "Gobi", "Kalahari"], answer: 0 },
+      { question: "Quel pays est le foyer du peuple Maasai?", choices: ["Kenya", "Tanzanie", "Ouganda", "Afrique du Sud"], answer: 0 },
+      { question: "Quel pays est célèbre pour le Colisée?", choices: ["Italie", "Grèce", "Turquie", "Espagne"], answer: 0 },
+      { question: "Dans quel continent se trouve la forêt amazonienne?", choices: ["Amérique du Sud", "Afrique", "Asie", "Australie"], answer: 0 },
+      { question: "Quel pays est connu pour les sushis?", choices: ["Chine", "Japon", "Thaïlande", "Vietnam"], answer: 1 },
+      { question: "Quel pays borde à la fois l'Atlantique et la Méditerranée?", choices: ["Espagne", "Portugal", "France", "Maroc"], answer: 0 },
+      { question: "Quel pays est célèbre pour le Kremlin?", choices: ["Russie", "Ukraine", "Pologne", "Biélorussie"], answer: 0 },
+      { question: "Quel pays a le plus de langues officielles?", choices: ["Afrique du Sud", "Inde", "Suisse", "Belgique"], answer: 0 },
+      { question: "Quel est le plus grand désert d'Asie?", choices: ["Gobi", "Thar", "Karakoum", "Kyzylkoum"], answer: 0 },
+      { question: "Quelle est la capitale de l'Australie?", choices: ["Sydney", "Melbourne", "Canberra", "Brisbane"], answer: 2 },
+      { question: "Quel pays est le plus grand producteur de café?", choices: ["Vietnam", "Brésil", "Colombie", "Éthiopie"], answer: 1 },
+      { question: "Quelle est la plus haute montagne du monde?", choices: ["K2", "Everest", "Kangchenjunga", "Lhotse"], answer: 1 },
+      { question: "Quel fleuve traverse Le Caire?", choices: ["Nil", "Tigre", "Euphrate", "Jourdain"], answer: 0 },
+      { question: "Quel pays est connu pour ses kangourous?", choices: ["Afrique du Sud", "Australie", "Nouvelle-Zélande", "Canada"], answer: 1 },
+      { question: "Quelle est la plus grande île des Caraïbes?", choices: ["Jamaïque", "Cuba", "Hispaniola", "Porto Rico"], answer: 1 },
+      { question: "Quel pays abrite la mer Morte?", choices: ["Jordanie", "Israël", "Palestine", "Tous ces pays"], answer: 3 },
+      { question: "Quel est le plus petit pays d'Amérique du Sud?", choices: ["Suriname", "Guyana", "Guyane française", "Équateur"], answer: 0 },
+      { question: "Quelle ville est surnommée 'Ville Éternelle'?", choices: ["Rome", "Athènes", "Jérusalem", "Le Caire"], answer: 0 },
+      { question: "Quel pays est célèbre pour la tour Eiffel?", choices: ["France", "Italie", "États-Unis", "Allemagne"], answer: 0 },
+      { question: "Quel désert se trouve en Chine et Mongolie?", choices: ["Gobi", "Sahara", "Kalahari", "Atacama"], answer: 0 },
+      { question: "Quel pays a le plus long littoral?", choices: ["Canada", "Australie", "Russie", "États-Unis"], answer: 0 },
+      { question: "Quel est le lac le plus profond du monde?", choices: ["Baïkal", "Supérieur", "Caspienne", "Tanganyika"], answer: 0 },
+      { question: "Quel pays abrite la vallée du Grand Rift?", choices: ["Kenya", "Éthiopie", "Tanzanie", "Tous ces pays"], answer: 3 },
+      { question: "Quel pays est célèbre pour son sirop d'érable?", choices: ["États-Unis", "Canada", "France", "Norvège"], answer: 1 },
+      { question: "Quel est le plus grand pays d'Amérique du Sud?", choices: ["Argentine", "Brésil", "Colombie", "Pérou"], answer: 1 },
+      { question: "Quel fleuve forme une partie de la frontière entre les États-Unis et le Mexique?", choices: ["Colorado", "Rio Grande", "Mississippi", "Hudson"], answer: 1 },
+      { question: "Quelle chaîne de montagnes longe la côte ouest de l'Amérique du Sud?", choices: ["Andes", "Rocheuses", "Alpes", "Himalaya"], answer: 0 },
+      { question: "Quel continent est le plus petit par superficie?", choices: ["Europe", "Australie", "Antarctique", "Amérique du Sud"], answer: 1 },
+      { question: "Quel pays est le plus grand exportateur de pétrole?", choices: ["Arabie saoudite", "Russie", "États-Unis", "Irak"], answer: 0 },
+      { question: "Quel océan est le plus chaud?", choices: ["Atlantique", "Pacifique", "Indien", "Arctique"], answer: 2 },
+      { question: "Quel pays est le plus peuplé d'Afrique?", choices: ["Nigeria", "Égypte", "Afrique du Sud", "Éthiopie"], answer: 0 },
+      { question: "Quel pays abrite le Grand Trou Bleu?", choices: ["Belize", "Mexique", "Bahamas", "Cuba"], answer: 0 },
+      { question: "Quelle est la capitale de la Nouvelle-Zélande?", choices: ["Auckland", "Wellington", "Christchurch", "Hamilton"], answer: 1 },
+      { question: "Quelle mer se trouve entre l'Afrique et l'Europe?", choices: ["Rouge", "Noire", "Méditerranée", "Baltique"], answer: 2 },
+      { question: "Quel pays a changé de capitale en 2022?", choices: ["Indonésie", "Égypte", "Malaisie", "Birmanie"], answer: 0 },
+      { question: "Où se trouve le point le plus éloigné de tout océan?", choices: ["Kazakhstan", "Chine", "Brésil", "Australie"], answer: 1 },
+      { question: "Quelle ville est traversée par le fleuve Amazone?", choices: ["Manaus", "Iquitos", "Belém", "Leticia"], answer: 0 },
+      { question: "Quel pays produit le plus de chocolat?", choices: ["Suisse", "Belgique", "Côte d'Ivoire", "Allemagne"], answer: 2 }
     ];
 
     let currentQuestion = 0;
     let score = 0;
     let selected = null;
+
+    // Mélanger les questions au démarrage
+    questions.sort(() => Math.random() - 0.5);
 
     function showQuestion() {
       const q = questions[currentQuestion];
@@ -378,7 +435,7 @@
           ).join("")}
         </div>
         <div class="feedback" id="feedback"></div>
-        <button class="btn" id="nextBtn" onclick="nextQuestion()" disabled>Next Question</button>
+        <button class="btn" id="nextBtn" onclick="nextQuestion()" disabled>Question suivante</button>
       `;
 
       updateProgress();
@@ -416,7 +473,7 @@
 
       if (selected === correct) {
         score++;
-        feedback.innerHTML = "✅ Correct!";
+        feedback.innerHTML = "✅ Correct !";
       } else {
         feedback.innerHTML = `❌ Incorrect. La bonne réponse est <strong>${questions[currentQuestion].choices[correct]}</strong>`;
       }
@@ -454,17 +511,74 @@
     function showResult() {
       saveBestScore(score);
       const best = getBestScore();
-
+      const percentage = (score / questions.length) * 100;
+      const levelInfo = getLevelInfo(percentage);
+      
       document.getElementById("quizContainer").innerHTML = "";
       document.getElementById("result").innerHTML = `
-        🎉 Quiz finished!<br>
-        Your final score is <strong>${score} / ${questions.length}</strong><br>
-        🏆 Best score: <strong>${best} / ${questions.length}</strong><br><br>
-        <button class="btn" onclick="restartQuiz()">Restart Quiz</button>
+        🎉 Quiz terminé !<br>
+        Votre score final : <strong>${score} / ${questions.length}</strong><br>
+        🏆 Meilleur score : <strong>${best} / ${questions.length}</strong>
+        
+        <div class="level-container ${levelInfo.class}">
+          <div class="level-icon">${levelInfo.icon}</div>
+          <h3 class="level-title">${levelInfo.title}</h3>
+          <p class="level-description">${levelInfo.description}</p>
+        </div>
+        
+        <button class="btn" onclick="restartQuiz()">Recommencer le Quiz</button>
       `;
     }
 
+    function getLevelInfo(percentage) {
+      if (percentage >= 95) {
+        return {
+          class: "level-master",
+          icon: "🧙‍♂️",
+          title: "Maître de la Géographie",
+          description: "Impressionnant ! Votre connaissance du monde est digne d'un atlas vivant. Vous pourriez rivaliser avec un GPS !"
+        };
+      } else if (percentage >= 80) {
+        return {
+          class: "level-expert",
+          icon: "🌟",
+          title: "Expert Géographique",
+          description: "Excellent ! Vous avez une connaissance approfondie de notre planète. Les cartes n'ont presque plus de secrets pour vous."
+        };
+      } else if (percentage >= 65) {
+        return {
+          class: "level-advanced",
+          icon: "🗺️",
+          title: "Avancé",
+          description: "Très bon score ! Vous avez une solide compréhension de la géographie mondiale. Continuez à explorer !"
+        };
+      } else if (percentage >= 50) {
+        return {
+          class: "level-intermediate",
+          icon: "🌍",
+          title: "Intermédiaire",
+          description: "Bon travail ! Vous avez des bases solides mais il reste quelques territoires à explorer dans vos connaissances."
+        };
+      } else if (percentage >= 30) {
+        return {
+          class: "level-beginner",
+          icon: "🧭",
+          title: "Débutant",
+          description: "Pas mal ! Vous commencez votre voyage à travers le monde. Un peu plus d'étude et vous progresserez rapidement."
+        };
+      } else {
+        return {
+          class: "level-novice",
+          icon: "🌱",
+          title: "Novice",
+          description: "Le monde est vaste et mystérieux ! C'est le moment idéal pour ouvrir un atlas et découvrir de nouveaux horizons."
+        };
+      }
+    }
+
     function restartQuiz() {
+      // Re-mélanger les questions pour une nouvelle partie
+      questions.sort(() => Math.random() - 0.5);
       currentQuestion = 0;
       score = 0;
       selected = null;
@@ -473,7 +587,7 @@
       document.getElementById("bestScoreDisplay").textContent = `${getBestScore()} / ${questions.length}`;
     }
 
-    // Gestion du mode sombre (désactivé par défaut)
+    // Gestion du mode sombre
     function toggleDarkMode() {
       document.body.classList.toggle("dark-mode");
       localStorage.setItem("darkMode", document.body.classList.contains("dark-mode"));
